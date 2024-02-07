@@ -16,17 +16,17 @@ public class AuthResponse {
         return this.token;
     }
 
-    public void setToken(String token) {
+    public void setToken(final String token) {
         this.token = token;
     }
 
-    public AuthResponse token(String token) {
+    public AuthResponse token(final String token) {
         setToken(token);
         return this;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (o == this)
             return true;
         if (!(o instanceof AuthResponse)) {

@@ -15,7 +15,7 @@ public class AuthRequest {
         return this.username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(final String username) {
         this.username = username;
     }
 
@@ -23,22 +23,22 @@ public class AuthRequest {
         return this.password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
-    public AuthRequest username(String username) {
+    public AuthRequest username(final String username) {
         setUsername(username);
         return this;
     }
 
-    public AuthRequest password(String password) {
+    public AuthRequest password(final String password) {
         setPassword(password);
         return this;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (o == this)
             return true;
         if (!(o instanceof AuthRequest)) {

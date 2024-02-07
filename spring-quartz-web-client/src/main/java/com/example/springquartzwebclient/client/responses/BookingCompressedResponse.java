@@ -26,7 +26,7 @@ public class BookingCompressedResponse {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (o == this)
             return true;
         if (!(o instanceof BookingCompressedResponse)) {

@@ -152,7 +152,7 @@ public class BookingResponse {
         public BookingDates() {
         }
     
-        public BookingDates(Date checkin, Date checkout) {
+        public BookingDates(final Date checkin, final Date checkout) {
             this.checkin = checkin;
             this.checkout = checkout;
         }
@@ -161,7 +161,7 @@ public class BookingResponse {
             return this.checkin;
         }
     
-        public void setCheckin(Date checkin) {
+        public void setCheckin(final Date checkin) {
             this.checkin = checkin;
         }
     
@@ -169,22 +169,22 @@ public class BookingResponse {
             return this.checkout;
         }
     
-        public void setCheckout(Date checkout) {
+        public void setCheckout(final Date checkout) {
             this.checkout = checkout;
         }
     
-        public BookingDates checkin(Date checkin) {
+        public BookingDates checkin(final Date checkin) {
             setCheckin(checkin);
             return this;
         }
     
-        public BookingDates checkout(Date checkout) {
+        public BookingDates checkout(final Date checkout) {
             setCheckout(checkout);
             return this;
         }
     
         @Override
-        public boolean equals(Object o) {
+        public boolean equals(final Object o) {
             if (o == this)
                 return true;
             if (!(o instanceof BookingDates)) {
