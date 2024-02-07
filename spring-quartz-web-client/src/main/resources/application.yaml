@@ -1,2 +1,7 @@
 server:
     port: 8081
+
+application-configuration:
+  webclient:
+    max-response-size: 20MB
+    timeout: 1m
