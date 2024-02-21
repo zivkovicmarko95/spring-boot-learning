@@ -1,7 +1,5 @@
 package com.example.springquartzwebclient.client.api;
 
-import java.util.List;
-
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.service.annotation.GetExchange;
 
@@ -46,21 +44,21 @@ public interface SwapiApiClient {
     );
 
     @GetExchange("https://swapi.dev/api/people/")
-    List<PersonResponse> getAllPeople();
+    PageSwapiResponse<PersonResponse> getAllPeople();
 
     @GetExchange("https://swapi.dev/api/planets/")
-    List<PlanetResponse> getAllPlanets();
+    PageSwapiResponse<PlanetResponse> getAllPlanets();
 
     @GetExchange("https://swapi.dev/api/films/")
-    List<FilmResponse> getAllFilms();
+    PageSwapiResponse<FilmResponse> getAllFilms();
 
     @GetExchange("https://swapi.dev/api/starships/")
-    List<StarshipResponse> getAllStarships();
+    PageSwapiResponse<StarshipResponse> getAllStarships();
 
     @GetExchange("https://swapi.dev/api/vehicles/")
     PageSwapiResponse<VehicleResponse> getAllVehicles();
 
     @GetExchange("https://swapi.dev/api/species/")
-    List<SpeciesResponse> getAllSpecies();
+    PageSwapiResponse<SpeciesResponse> getAllSpecies();
 
 }
