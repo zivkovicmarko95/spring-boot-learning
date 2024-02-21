@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.example.springquartzwebclient.client.api.BookerApiClient;
 import com.example.springquartzwebclient.client.requests.AuthRequest;
@@ -14,7 +14,7 @@ import com.example.springquartzwebclient.client.responses.AuthResponse;
 import com.example.springquartzwebclient.client.responses.BookingCompressedResponse;
 import com.example.springquartzwebclient.client.responses.BookingResponse;
 
-@Component
+@Service
 public class BookerApiService implements BookerApiClient {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(BookerApiService.class);
