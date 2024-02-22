@@ -2,9 +2,11 @@ package com.example.springquartzwebclient.jobs;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.example.springquartzwebclient.client.api.impl.BookerApiService;
 import com.example.springquartzwebclient.client.responses.BookingCompressedResponse;
+import com.example.springquartzwebclient.client.responses.BookingResponse;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -29,7 +31,13 @@ public class BookerJob implements Job {
 
         final List<BookingCompressedResponse> bookingCompressedResponse = this.bookerApiService.bookingGet(Map.of(), Map.of());
 
-        LOGGER.info("List of booking comp {}", bookingCompressedResponse);
+        final BookingCompressedResponse compressedResponse = bookingCompressedResponse.stream()
+                .findAny()
+                .orElseThrow();
+
+        final BookingResponse bookingResponse = this.bookerApiService.bookingBookingIdGet(Map.of(), compressedResponse.getBookingid());
+
+        LOGGER.info("Random booking response {} is found {}", compressedResponse, bookingResponse);
 
         LOGGER.info("Ended booker job ... OK");
     }

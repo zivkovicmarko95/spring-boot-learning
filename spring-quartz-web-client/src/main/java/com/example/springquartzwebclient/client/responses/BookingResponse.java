@@ -1,6 +1,5 @@
 package com.example.springquartzwebclient.client.responses;
 
-import java.util.Date;
 import java.util.Objects;
 
 public class BookingResponse {
@@ -9,7 +8,6 @@ public class BookingResponse {
     private String lastname;
     private Integer totalprice;
     private Boolean depositpaid;
-    private BookingDates bookingdates;
     private String additionalneeds;
 
     public BookingResponse() {
@@ -17,12 +15,11 @@ public class BookingResponse {
 
     public BookingResponse(final String firstname, final String lastname,
             final Integer totalprice, final Boolean depositpaid,
-            final BookingDates bookingdates, final String additionalneeds) {
+            final String additionalneeds) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.totalprice = totalprice;
         this.depositpaid = depositpaid;
-        this.bookingdates = bookingdates;
         this.additionalneeds = additionalneeds;
     }
 
@@ -62,14 +59,6 @@ public class BookingResponse {
         this.depositpaid = depositpaid;
     }
 
-    public BookingDates getBookingdates() {
-        return this.bookingdates;
-    }
-
-    public void setBookingdates(final BookingDates bookingdates) {
-        this.bookingdates = bookingdates;
-    }
-
     public String getAdditionalneeds() {
         return this.additionalneeds;
     }
@@ -98,11 +87,6 @@ public class BookingResponse {
         return this;
     }
 
-    public BookingResponse bookingdates(final BookingDates bookingdates) {
-        setBookingdates(bookingdates);
-        return this;
-    }
-
     public BookingResponse additionalneeds(final String additionalneeds) {
         setAdditionalneeds(additionalneeds);
         return this;
@@ -120,14 +104,13 @@ public class BookingResponse {
                 Objects.equals(lastname, bookingResponse.lastname) &&
                 Objects.equals(totalprice, bookingResponse.totalprice) &&
                 Objects.equals(depositpaid, bookingResponse.depositpaid) &&
-                Objects.equals(bookingdates, bookingResponse.bookingdates) &&
                 Objects.equals(additionalneeds, bookingResponse.additionalneeds);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(
-            firstname, lastname, totalprice, depositpaid, bookingdates, additionalneeds
+            firstname, lastname, totalprice, depositpaid, additionalneeds
         );
     }
 
@@ -138,76 +121,8 @@ public class BookingResponse {
             ", lastname='" + getLastname() + "'" +
             ", totalprice='" + getTotalprice() + "'" +
             ", depositpaid='" + isDepositpaid() + "'" +
-            ", bookingdates='" + getBookingdates() + "'" +
             ", additionalneeds='" + getAdditionalneeds() + "'" +
             "}";
-    }
-
-
-    public static class BookingDates {
-
-        private Date checkin;
-        private Date checkout;
-
-        public BookingDates() {
-        }
-    
-        public BookingDates(final Date checkin, final Date checkout) {
-            this.checkin = checkin;
-            this.checkout = checkout;
-        }
-    
-        public Date getCheckin() {
-            return this.checkin;
-        }
-    
-        public void setCheckin(final Date checkin) {
-            this.checkin = checkin;
-        }
-    
-        public Date getCheckout() {
-            return this.checkout;
-        }
-    
-        public void setCheckout(final Date checkout) {
-            this.checkout = checkout;
-        }
-    
-        public BookingDates checkin(final Date checkin) {
-            setCheckin(checkin);
-            return this;
-        }
-    
-        public BookingDates checkout(final Date checkout) {
-            setCheckout(checkout);
-            return this;
-        }
-    
-        @Override
-        public boolean equals(final Object o) {
-            if (o == this)
-                return true;
-            if (!(o instanceof BookingDates)) {
-                return false;
-            }
-            BookingDates bookingDates = (BookingDates) o;
-            return Objects.equals(checkin, bookingDates.checkin) &&
-                    Objects.equals(checkout, bookingDates.checkout);
-        }
-    
-        @Override
-        public int hashCode() {
-            return Objects.hash(checkin, checkout);
-        }
-    
-        @Override
-        public String toString() {
-            return "{" +
-                " checkin='" + getCheckin() + "'" +
-                ", checkout='" + getCheckout() + "'" +
-                "}";
-        }
-
     }
 
 }

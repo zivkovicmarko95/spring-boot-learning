@@ -48,13 +48,13 @@ public class QuartzConfiguration {
     @Bean
     CronTriggerFactoryBean bookerTrigger(@Qualifier("bookerJobDetail") final JobDetail jobDetail) {
 
-        return this.createCronTrigger(jobDetail, "0/10 * * * * ?");
+        return this.createCronTrigger(jobDetail, "0/20 * * * * ?");
     }
 
     @Bean
     CronTriggerFactoryBean swapiTrigger(@Qualifier("swapiJobDetail") final JobDetail jobDetail) {
 
-        return this.createCronTrigger(jobDetail, "0/10 * * * * ?");
+        return this.createCronTrigger(jobDetail, "0/20 * * * * ?");
     }
 
     @Bean
