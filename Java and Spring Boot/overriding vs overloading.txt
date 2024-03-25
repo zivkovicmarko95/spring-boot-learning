@@ -1,0 +1,72 @@
+Overloading and overriding are both important concepts in object-oriented programming, but they serve different purposes:
+
+Overloading:
+	- Definition: Overloading refers to the ability to define multiple methods in a class with the same name but different
+		parameters. These methods can have the same name but different parameter types, different numbers of parameters,
+		or a different order of parameters.
+	- Purpose: Overloading allows you to provide multiple ways to perform a similar operation based on the input parameters
+		or the type of data being used. It improves code readability and provides flexibility by allowing methods with the
+		same name to perform similar tasks but with different input variations.
+	- Resolution: The selection of the appropriate overloaded method is determined at compile-time based on the number,
+		types, and order of arguments provided during method invocation.
+Overriding:
+	- Definition: Overriding occurs when a subclass provides a different implementation of a method that is already defined
+		in its superclass. The method in the subclass must have the same name, return type, and parameter list as the
+		method in the superclass.
+	- Purpose: Overriding allows you to modify or extend the behavior of inherited methods from the superclass in the subclass.
+		It enables you to provide specific implementations based on the specialized needs of the subclass.
+	- Resolution: The selection of the appropriate overridden method is determined at runtime based on the actual type of the
+		object. When a method is invoked on a subclass object, the JVM checks if the method is overridden in the subclass. If
+		it is, the overridden implementation in the subclass is executed.
+
+Differences between Overloading and Overriding:
+	- Relationship: Overloading occurs within a single class, where multiple methods share the same name but have different
+		parameters. Overriding occurs between a superclass and its subclass, where the subclass provides a different
+		implementation of an inherited method.
+	- Class Scope: Overloading is confined to a single class and its visibility is limited to that class. Overriding involves
+		the inheritance hierarchy, where the subclass overrides the method inherited from the superclass.
+	- Method Resolution: Overloaded methods are resolved at compile-time based on the method signature. Overridden methods
+		are resolved at runtime based on the actual type of the object.
+	- Inheritance Requirement: Overloading does not require inheritance. Overriding requires inheritance, as the overridden
+		method must be inherited from a superclass.
+	- Signature Requirement: Overloaded methods must have a different method signature, which includes the number, types,
+		or order of parameters. Overridden methods must have the same method signature as the method in the superclass.	
+		
+-----------------------------------------------------------------------------------------------------------
+// Superclass
+class Shape {
+    // Method Overloading
+    public void draw() {
+        System.out.println("Drawing a shape");
+    }
+
+    public void draw(String color) {
+        System.out.println("Drawing a shape with color: " + color);
+    }
+}
+
+// Subclass
+class Circle extends Shape {
+    // Method Overriding
+    @Override
+    public void draw() {
+        System.out.println("Drawing a circle");
+    }
+}
+
+// Main class
+public class OverloadingOverridingExample {
+    public static void main(String[] args) {
+        Shape shape = new Shape();
+        shape.draw();             // Drawing a shape
+        shape.draw("red");        // Drawing a shape with color: red
+
+        Circle circle = new Circle();
+        circle.draw();            // Drawing a circle
+        circle.draw("blue");      // Drawing a shape with color: blue
+
+        Shape circleShape = new Circle();
+        circleShape.draw();       // Drawing a circle (Polymorphic method invocation)
+        circleShape.draw("green");// Drawing a shape with color: green (Polymorphic method invocation)
+    }
+}

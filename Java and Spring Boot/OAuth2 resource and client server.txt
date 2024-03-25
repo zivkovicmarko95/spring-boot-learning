@@ -1,0 +1,32 @@
+In OAuth 2.0, the terms "resource server" and "client server" refer to different roles and responsibilities within the OAuth 2.0 architecture.
+Here's a brief explanation of each:
+
+Resource Server:
+	- The resource server is a component that hosts protected resources, such as user data or APIs.
+	- Its primary role is to handle incoming requests for accessing protected resources and validate the access tokens provided by clients.
+	- The resource server verifies the access token's validity and permissions to ensure that the requesting client has the necessary authorization to access the requested resource.
+	- Examples of resource servers include API servers, file servers, or any server that hosts and manages protected resources.
+
+Client Server:
+	- The client server, also known as the OAuth client, is an application that requests access to protected resources on behalf of a user or itself.
+	- It interacts with the authorization server to obtain authorization grants and access tokens required to access the protected resources.
+	- The client server can be a web application, mobile app, or any software component that needs to access resources on behalf of the user or itself.
+	- Once the client server obtains an access token, it includes the token in its requests to the resource server to access the protected resources.
+	
+The resource server hosts and protects resources, while the client server is an application that requests access to those protected resources.
+The resource server verifies the access tokens provided by the client server and grants access based on the permissions associated with the token.
+The client server interacts with the authorization server to obtain the necessary access tokens and includes them in its requests to access protected resources. 
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+When to use resource server and when to use client server? 
+
+Use a Resource Server when you want to protect and host specific resources (e.g., user data or APIs) and ensure that only authorized
+clients can access them. The resource server validates access tokens provided by clients and grants access based on permissions associated
+with the token. Resource servers are responsible for handling requests and serving protected resources.
+
+Use a Client Server when you have an application or component that needs to access protected resources on behalf of the user or itself.
+The client server interacts with the authorization server to obtain access tokens, which it includes in its requests to the resource
+server to access the protected resources.
+
+In short, the resource server is responsible for hosting and protecting resources, while the client server is an application that requests access to those protected resources.
+The client server obtains access tokens and includes them in its requests to access the resources hosted by the resource server.

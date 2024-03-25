@@ -1,0 +1,30 @@
+In Java, when defining an inner class within another class, you have the option to declare it as either a static inner class or a non-static
+inner class (also known as an inner class or nested class). The choice between static and non-static depends on the relationship you want to
+establish between the outer class and the inner class.
+
+In your example, the AddressInfo class is declared as a static inner class (public static class AddressInfo). In this case, the static keyword
+is used because it indicates that the inner class is independent of the outer class instances and does not have direct access to the non-static
+members of the outer class. Here's when you would typically use a static inner class:
+	No direct dependency on the outer class:
+		If the inner class does not need to access the non-static members (fields or methods) of the outer class, and it can function
+		independently, then declaring it as a static inner class is appropriate. It allows the inner class to be instantiated without
+		an instance of the outer class.
+	Namespace organization:
+		Using a static inner class allows you to logically group related classes together, providing a clear and structured organization
+		within the outer class.
+	Convenience:
+		By declaring the inner class as static, you can create instances of the inner class without requiring an instance of the outer class.
+		This can simplify the code and usage, especially if the inner class is used in other parts of the application independently.
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+public class StudentModel {
+   private Long id;
+   private String name;
+   private AddressInfo address;
+
+  public static class AddressInfo {
+     private String street;
+     private String streetNumber;
+    private String city;
+  }
+}

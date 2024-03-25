@@ -1,0 +1,35 @@
+SQL Databases:
+
+Data Model: SQL databases follow a structured, tabular data model with predefined schemas. They use SQL (Structured Query Language) for defining and manipulating data.
+	Pros:
+		ACID Compliance:
+			SQL databases provide strong transactional consistency, ensuring data integrity and reliability.
+		Mature and Established:
+			SQL databases have been widely used for decades, resulting in a mature ecosystem with well-defined standards, tools, and support.
+		Complex Queries:
+			SQL databases excel at complex queries, aggregations, and joins, making them suitable for applications with complex relationships and reporting needs.
+	Cons:
+		Fixed Schema:
+			SQL databases require a predefined schema, making it challenging to handle dynamic, evolving, or unstructured data.
+		Vertical Scalability:
+			Scaling SQL databases vertically (increasing hardware resources) can be costly and limited.
+		Limited Horizontal Scalability:
+			While SQL databases can scale horizontally, it often involves more effort and complexity compared to NoSQL databases.
+		Use Cases:
+			SQL databases are well-suited for applications that require strong data consistency, complex queries, and structured data, such as financial systems,
+			inventory management, and content management systems.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+NoSQL Databases:
+
+Data Model: NoSQL databases offer various data models like key-value, document, columnar, and graph, providing more flexibility and scalability options.
+	Pros:
+		Flexible Schema: NoSQL databases allow for dynamic and schema-less data, accommodating evolving and unstructured data.
+		Horizontal Scalability: NoSQL databases are designed for easy horizontal scalability, enabling distributed data storage and high scalability.
+		Performance: NoSQL databases can achieve high read and write throughput, making them suitable for applications with massive amounts of data or high traffic.
+	Cons:
+		Eventual Consistency: NoSQL databases may sacrifice strong consistency for high availability and scalability, resulting in eventual consistency models.
+		Limited Query Capabilities: NoSQL databases often lack the full power and flexibility of complex queries and joins offered by SQL databases.
+		Learning Curve: NoSQL databases introduce new concepts and query languages, requiring a learning curve for developers unfamiliar with them.
+		Use Cases: NoSQL databases are ideal for applications with large-scale data, high throughput requirements, dynamic or unstructured data, real-time analytics,
+			and distributed systems, such as social networks, IoT platforms, recommendation engines, and logging systems.

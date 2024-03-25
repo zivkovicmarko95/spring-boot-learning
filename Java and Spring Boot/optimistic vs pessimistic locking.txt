@@ -1,0 +1,163 @@
+Optimistic locking and pessimistic locking are two concurrency control techniques used in database systems to manage concurrent access to shared data.
+They have different approaches and are suited for different scenarios:
+
+Optimistic Locking:
+
+	Approach:
+		Optimistic locking assumes that conflicts between concurrent transactions are infrequent. It allows concurrent access to data without acquiring locks
+		during read operations. However, during updates, it checks for conflicts before committing the changes.
+	Mechanism:
+		When a transaction updates a record, it checks if the record has been modified by another transaction since it was last read. This is typically done
+		by comparing timestamps, version numbers, or checksums associated with the data.
+	Conflict Resolution:
+		If no conflicts are detected, the transaction proceeds and commits the changes. If conflicts are detected, the transaction is rolled back, and
+		appropriate actions can be taken, such as notifying the user or retrying the transaction.
+	Use Case:
+		Optimistic locking is useful when conflicts are rare, and the probability of concurrent transactions modifying the same data simultaneously is low.
+		It allows for higher concurrency and minimizes the need for acquiring locks, leading to better performance in environments with low contention.
+
+Pessimistic Locking:
+
+	Approach:
+		Pessimistic locking assumes that conflicts between concurrent transactions are common. It acquires locks on data during read operations, preventing
+		other transactions from modifying the same data until the lock is released.
+	Mechanism:
+		When a transaction wants to access a record, it acquires an exclusive lock on the record, ensuring that no other transaction can concurrently modify
+		it. Other transactions may need to wait until the lock is released.
+	Conflict Resolution:
+		Pessimistic locking resolves conflicts by preventing concurrent modifications, ensuring serializable execution of transactions. The lock is released
+		when the transaction completes its operation.
+	Use Case:
+		Pessimistic locking is suitable when conflicts are frequent, and the probability of concurrent transactions modifying the same data simultaneously is
+		high. It provides strict data consistency but can lead to lower concurrency and potential performance issues due to contention.
+	
+The choice between optimistic locking and pessimistic locking depends on the specific requirements and characteristics of the application:
+	- Use optimistic locking when conflicts are rare, and you want to maximize concurrency and performance.
+	- Use pessimistic locking when conflicts are common, and strict data consistency is crucial, even if it impacts concurrency.
+
+It's worth noting that both techniques have their trade-offs. Optimistic locking can result in the need for retries and additional conflict resolution logic,
+while pessimistic locking can introduce contention and potential delays due to locks. Choosing the appropriate locking mechanism requires considering factors
+such as the application's concurrency requirements, the nature of data access patterns, and the likelihood of conflicts occurring in the system.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Code for optimistic locking:
+
+
+import javax.persistence.*;
+
+@Entity
+public class Student {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+
+    @Version
+    private int version; // optimistic locking version field
+
+    // Constructors, getters, and setters
+
+    // Other entity properties and methods
+}
+
+
+In this example, we have an entity class Student that represents a student record. The @Version annotation is used to enable optimistic locking for the entity.
+It associates an integer field (version) with the optimistic locking mechanism.
+
+When using JPA and the @Version annotation, here's how optimistic locking works behind the scenes:
+	- When a record is retrieved from the database, the current version number is also fetched.
+	- When an update operation is performed on the record, JPA automatically checks if the version number in the database matches the version number of the entity being updated.
+	- If the version numbers match, the update is allowed, and JPA increments the version number in the database to reflect the changes.
+	- If the version numbers don't match, it means that another transaction has modified the record since it was last read. In this case, an OptimisticLockException is thrown,
+		indicating a conflict. You can catch this exception and handle it accordingly, such as by notifying the user or retrying the operation.
+
+Optimistic locking helps detect concurrent modifications and enables handling conflicts gracefully. By using the @Version annotation in your entity class, you can leverage
+optimistic locking in your Java application with JPA.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Code for pessimistic locking:
+
+import javax.persistence.*;
+
+@Entity
+public class Student {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+
+    // Other entity properties and methods
+}
+
+import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.JpaRepository;
+import javax.persistence.LockModeType;
+
+public interface StudentRepository extends JpaRepository<Student, Long> {
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    Student findByIdAndLock(Long id);
+}
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
+public class StudentService {
+
+    private final StudentRepository studentRepository;
+
+    @Autowired
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
+
+    public void performOperationsWithPessimisticLock(Long id) {
+        Student student = studentRepository.findByIdAndLock(id);
+        // Perform operations on the locked entity
+        // ...
+    }
+}
+
+In this example, we have an entity class Student representing a student record. We define a repository interface StudentRepository that extends JpaRepository and
+provides a custom method findByIdAndLock().
+
+The @Lock(LockModeType.PESSIMISTIC_WRITE) annotation is used in the StudentRepository interface to specify pessimistic write locking when executing the custom
+query method. This ensures that the returned Student entity is locked with a pessimistic write lock.
+
+We then have a service class StudentService that depends on the StudentRepository. In the performOperationsWithPessimisticLock() method, we use the custom
+repository method findByIdAndLock() to retrieve the Student entity with a pessimistic write lock. This allows us to perform operations on the locked entity
+within the transactional context.
+
+Vlad Locking:
+
+Pessimistic Locking
+Pessimistic locking achieves this goal by taking a shared or read lock on the account so Bob is prevented from changing the account.
+
+In the diagram above, both Alice and Bob will acquire a read lock on the account table row that both users have read. The database acquires these locks on SQL Server when using Repeatable Read or Serializable.
+
+Because both Alice and Bob have read the account with the PK value of 1, neither of them can change it until one user releases the read lock. This is because a write operation requires a write/exclusive lock acquisition, and shared/read locks prevent write/exclusive locks.
+
+Only after Alice has committed her transaction and the read lock was released on the account row, Bob UPDATE will resume and apply the change. Until Alice releases the read lock, Bob's UPDATE blocks.
+
+Optimistic Locking
+Optimistic Locking allows the conflict to occur but detects it upon applying Alice's UPDATE as the version has changed.
+
+This time, we have an additional version column. The version column is incremented every time an UPDATE or DELETE is executed, and it is also used in the WHERE clause of the UPDATE and DELETE statements. For this to work, we need to issue the SELECT and read the current version prior to executing the UPDATE or DELETE, as otherwise, we would not know what version value to pass to the WHERE clause or to increment.
+
+So, optimistic locking can help you prevent Lost Updates even when using application-level transactions that incorporate the user-think time as well.
+
+Conclusion
+Optimistic locking is a very useful technique, and it works just fine even when using less-strict isolation levels, like Read Committed, or when reads and writes are executed in subsequent database transactions.
+
+The downside of optimistic locking is that a rollback will be triggered by the data access framework upon catching an OptimisticLockException, therefore losing all the work we've done previously by the currently executing transaction.
+
+The more contention, the more conflicts, and the greater the chance of aborting transactions. Rollbacks can be costly for the database system as it needs to revert all current pending changes which might involve both table rows and index records.
+
+For this reason, pessimistic locking might be more suitable when conflicts happen frequently, as it reduces the chance of rolling back transactions.
+

@@ -1,0 +1,36 @@
+How to call garbadgecollector 
+
+	In Java, you can't directly call the garbage collector (GC), but you can suggest to the JVM that it might be a good time to run garbage collection.
+	However, it's important to note that calling the garbage collector explicitly is generally discouraged, as the JVM is typically better suited to determine
+	when garbage collection should occur based on its own algorithms and heuristics.
+
+	Here's how you can suggest to the JVM to run garbage collection:
+
+		System.gc();
+
+	The System.gc() method is a static method in the System class, and when called, it suggests to the JVM that it should run the garbage collector.
+	However, it's important to remember that this is just a suggestion, and the JVM may choose to ignore it depending on its current state and other factors.
+
+	It's worth mentioning that calling System.gc() doesn't guarantee that garbage collection will actually occur immediately. The JVM may choose to defer garbage
+	collection until it determines that it's an appropriate time based on factors such as memory usage, system load, and other runtime conditions.
+
+What about finalize?
+
+	The finalize() method in Java is a method provided by the Object class that is called by the garbage collector when an object is about to be garbage collected, i.e.,
+	when there are no more references to the object and it is eligible for destruction.
+	Here are some key points about the finalize() method:
+		Purpose: The finalize() method allows an object to perform cleanup actions before it is reclaimed by the garbage collector.
+			This can include releasing resources such as file handles, closing database connections, or releasing memory allocated by the object.
+		Invocation: The finalize() method is automatically called by the garbage collector when it determines that there are no more references to
+			the object and it is eligible for garbage collection. It is called at most once for any given object.
+		Syntax: The finalize() method has the following signature:
+			protected void finalize() throws Throwable {
+				// Cleanup actions
+			}
+		Usage: While the finalize() method can be overridden in subclasses to provide custom cleanup logic, it is generally recommended to avoid relying on
+			it for critical cleanup tasks. Instead, resources should be explicitly released using try-with-resources blocks, finally blocks, or other cleanup
+			mechanisms provided by Java libraries.
+		Caveats: The finalize() method has several limitations and caveats:
+			It is not guaranteed to be called promptly or at all by the garbage collector.
+			It can lead to resource leaks if not implemented properly or if resources are not released in a timely manner.
+			It can impact performance and introduce unpredictability in the garbage collection process.

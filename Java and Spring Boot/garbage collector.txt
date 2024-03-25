@@ -1,0 +1,55 @@
+In programming, the "garbage collector" is an automatic memory management system that helps manage dynamic memory
+allocation and deallocation in languages like Java, C#, and Python. Its primary purpose is to reclaim memory that
+is no longer in use by identifying and freeing up resources occupied by objects that are no longer referenced by
+the program.
+
+Here's a high-level overview of how the garbage collector works:
+
+	- Memory Allocation:
+		When objects are created in a program, memory is allocated to store them. This memory is typically allocated
+		from a heap, which is a region of memory designated for dynamic memory allocation.
+	- Object Reachability:
+		The garbage collector determines which objects are still in use and reachable by the program. It starts from
+		a set of root objects (e.g., global variables, function call stacks) and traces the object graph, marking
+		objects as reachable.
+	- Mark and Sweep:
+		The garbage collector performs a marking phase, where it traverses the object graph and marks objects that are
+		reachable. Any objects not marked during this phase are considered unreachable and eligible for garbage collection.
+		After marking, a sweeping phase follows, where the garbage collector reclaims the memory occupied by the unmarked
+		objects.
+	- Memory Reclamation:
+		During the sweeping phase, the garbage collector releases the memory occupied by the unreachable objects, making it
+		available for future memory allocations. This process involves updating internal data structures, such as memory
+		allocation metadata, to reflect the freed memory.
+
+The garbage collector typically runs in the background, periodically or when triggered by certain conditions, to reclaim
+memory. The exact algorithms and strategies used by garbage collectors can vary depending on the programming language
+and runtime environment.
+
+The advantages of using a garbage collector include:
+
+	Simplified memory management:
+		Developers don't need to manually allocate and deallocate memory, reducing the risk of memory leaks and segmentation
+		faults.
+	Increased productivity:
+		Automatic memory management reduces the burden on developers, allowing them to focus on application logic rather than
+		memory management details.
+	Memory safety:
+		Garbage collectors help prevent common memory-related errors such as dangling pointers or use-after-free bugs.
+
+However, the garbage collector also introduces some overhead, such as the need for additional CPU cycles and potential pauses
+during the garbage collection process.
+
+Overall, garbage collectors play a crucial role in managing memory resources and improving the robustness and reliability
+of programs that rely on dynamic memory allocation.
+
+
+	When an Object becomes eligible for Garbage Collection?
+		An object become eligible if it is not used by any program or thread or any static references or its references is null. If two objects
+		having reference (cyclic reference) of each other and does not have any live reference then both objects collected by the garbage collector.
+		There are some other cases when an object become eligible for garbage collection:
+
+		If the reference of that object is explicitly set to null.
+		The object also becomes eligible if it is created inside a block and the reference goes out of the scope once control exit from the block.
+
+		In Java, references to objects are typically stored on the stack or within objects on the heap. The actual object's data resides on the heap.

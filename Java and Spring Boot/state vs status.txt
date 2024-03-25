@@ -1,0 +1,26 @@
+State:
+	State refers to the current condition or configuration of an object, system, or entity at a particular point in time.
+	It represents the values of attributes or properties that define the object's characteristics or behavior at a given moment.
+	State can be described as the snapshot or representation of an object's data and internal state at a specific point in time.
+	State is typically associated with objects or entities that have properties or attributes that can change over time
+	
+Status:
+	Status refers to the particular state or condition of a system, process, or entity in relation to a specific context or predefined criteria.
+	It represents the context-specific information that describes the current situation or position of the object or system.
+	Status is often used to provide information about the progress, availability, readiness, or health of an object or system.
+	Status is typically represented by a set of predefined values or indicators that convey specific meanings
+	
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+status == how are you? [good/bad]
+
+state == what are you doing? [resting/working]
+
+State generally refers to the entire state of an entity - all its values and relationships at a particular point in time (usually, current)
+
+Status is more of a time-point, say, where something is at in a process or workflow - is it dirty (therefore requiring saving), is it complete,
+is it pending input, etc
+
+In Veeam technical documentation, we use state when talking about an overall condition of an entity or a result of some operation with the entity
+(such as Idle, Running, Disabled, Verified and so on), while status stands for the current condition of an entity with respect to particular circumstances
+(such as Success, Failed, Warning and so on).

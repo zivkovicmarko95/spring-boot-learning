@@ -1,0 +1,15 @@
+In Spring Boot, a bean is an object managed by the Spring IoC (Inversion of Control) container. It is a Java object that is instantiated,
+assembled, and managed by the container, allowing it to be easily wired into other components of the application.
+
+A bean in Spring Boot typically represents a component or a service that performs a specific functionality within the application.
+
+To define a bean in Spring Boot, you can use the @Component annotation or its specialized variants, such as @Service, @Repository, or
+@Controller. These annotations signal to the Spring IoC container that the annotated class should be treated as a bean and managed by
+the container.
+
+By default, Spring Boot automatically scans and detects components within the application's base package and its sub-packages. The
+container identifies the annotated classes, creates the corresponding bean instances, and manages their lifecycle.
+
+Defining beans in Spring Boot allows for loose coupling and promotes modular and reusable code. The Spring IoC container handles the
+instantiation, configuration, and wiring of beans, simplifying the development process and promoting the principles of dependency
+injection and inversion of control.

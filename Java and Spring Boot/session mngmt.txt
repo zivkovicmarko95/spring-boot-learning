@@ -1,0 +1,14 @@
+This control ranges from a session timeout to enabling concurrent sessions and other advanced security configs.
+
+We can control exactly when our session gets created and how Spring Security will interact with it:
+	- always – A session will always be created if one doesn't already exist.
+	- ifRequired – A session will be created only if required (default).
+	- never – The framework will never create a session itself, but it will use one if it already exists.
+	- stateless – No session will be created or used by Spring Security
+	
+It's very important to understand that this configuration only controls what Spring Security does, not the entire
+application. Spring Security won't create the session if we instruct it not to, but our app might!
+
+The strictest session creation option, “stateless“, is a guarantee that the application won't create any session at all.
+
+If we have to work with session, probably there will be some cookie that we should handle.

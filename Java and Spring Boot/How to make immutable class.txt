@@ -1,0 +1,87 @@
+To create an immutable class in Java, follow these guidelines:
+	Make the class final to prevent subclassing.
+	Declare all fields private and final to prevent modification after object creation.
+	Don't provide setter methods for the fields.
+	Ensure that mutable objects (if any) are safely encapsulated and not modified after construction.
+	If the class has mutable fields, return defensive copies of them in getter methods to prevent external modification.
+	If the class has mutable fields, make sure they are deeply copied to avoid sharing mutable state between instances.
+	Ensure that any mutable collections returned by getter methods are wrapped with Collections.unmodifiableXXX() to prevent modification.
+	
+	Here's an example of an immutable class:
+
+	import java.util.ArrayList;
+	import java.util.Collections;
+	import java.util.List;
+
+	public final class ImmutableClass {
+		private final int intValue;
+		private final String stringValue;
+		private final List<String> stringList;
+
+		public ImmutableClass(int intValue, String stringValue, List<String> stringList) {
+			this.intValue = intValue;
+			this.stringValue = stringValue;
+			// Create a defensive copy of the list to ensure immutability
+			this.stringList = new ArrayList<>(stringList);
+		}
+
+		public int getIntValue() {
+			return intValue;
+		}
+
+		public String getStringValue() {
+			return stringValue;
+		}
+
+		// Return an unmodifiable view of the list to prevent modification
+		public List<String> getStringList() {
+			return Collections.unmodifiableList(stringList);
+		}
+		
+		// hashCode, equals and toString
+	}
+
+	In this example:
+
+	The ImmutableClass is declared as final.
+	All fields (intValue, stringValue, stringList) are declared private and final.
+	There are no setter methods for the fields.
+	The stringList field is defensively copied to ensure immutability.
+	The getStringList() method returns an unmodifiable view of the list to prevent modification.
+
+
+What if I have a field of type MyClass in class ImmutableClass, for example, private final MyClass myClass, and this class has some fields.
+By default, MyClass is not an immutable class which means that if I have a getter for this class, I can modify it which means that ImmutableClass is not immutable anymore.
+How do we fix this issue?
+
+	To ensure immutability of the ImmutableClass when it contains a field of a mutable class like MyClass, you have a few options:
+		Make MyClass Immutable: Modify the MyClass to make it immutable. This means ensuring that all its fields are final and that it does not provide any methods that modify its state after construction.
+		Defensive Copy in Getter: If making MyClass immutable is not feasible, you can defensively copy the MyClass object in the getter method of ImmutableClass. This way, any modifications made to the returned object won't affect the internal state of ImmutableClass.
+		
+	public final class ImmutableClass {
+		private final int intValue;
+		private final String stringValue;
+		private final MyClass myClass;
+
+		public ImmutableClass(int intValue, String stringValue, MyClass myClass) {
+			this.intValue = intValue;
+			this.stringValue = stringValue;
+			// Perform a defensive copy of MyClass object
+			this.myClass = new MyClass(myClass);
+		}
+
+		public int getIntValue() {
+			return intValue;
+		}
+
+		public String getStringValue() {
+			return stringValue;
+		}
+
+		// Return a defensive copy of MyClass object
+		public MyClass getMyClass() {
+			return new MyClass(myClass);
+		}
+	}
+	
+	In this example, the getMyClass() method returns a defensive copy of the myClass field, ensuring that any modifications made to the returned object won't affect the internal state of ImmutableClass.

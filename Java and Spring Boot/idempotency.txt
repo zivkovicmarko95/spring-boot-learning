@@ -1,0 +1,36 @@
+Idempotency is a concept in computer science and mathematics that refers to the property of an operation where applying it multiple times has the same effect as applying it once.
+In other words, if you perform the same operation repeatedly, the result remains unchanged after the first application.
+
+In the context of web services and APIs, idempotency is particularly important. It ensures that performing the same API request multiple times produces the same outcome as making
+the request only once. This property is crucial for ensuring the integrity and consistency of data and preventing unintended side effects, especially in distributed systems where
+network errors, timeouts, and retries are common.
+
+To achieve idempotency in API design, developers often assign unique identifiers (IDs) to each API request and ensure that the server can recognize and handle duplicate requests
+based on these IDs. Additionally, the server's response should indicate whether the request was successfully processed, allowing clients to determine whether they need to retry
+the request in case of failure.
+
+In summary, idempotency is a fundamental principle in designing reliable and predictable systems, ensuring that operations can be safely retried without causing unintended
+consequences or data inconsistencies.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Which HTTP requests are idemoptent?
+
+	In HTTP, idempotent requests are those that can be safely repeated multiple times without causing a different outcome beyond the initial application.
+	Idempotent requests are crucial for ensuring the integrity and consistency of data in distributed systems, especially in scenarios where network errors,
+	timeouts, and retries are common.
+
+	The following HTTP methods are considered idempotent:
+		GET: Retrieving a resource using the GET method is idempotent because it only retrieves data from the server without modifying it. Sending multiple
+			identical GET requests should not alter the server's state or the resource being accessed.
+		HEAD: The HEAD method is similar to GET but only retrieves the headers of a resource without the body content. Like GET, it is also idempotent because
+			it does not modify the server's state.
+		PUT: The PUT method is used to update or create a resource at a specific URI. If a PUT request is repeated with the same data, it will result in the
+			same resource state being stored on the server. Therefore, PUT is considered idempotent.
+		DELETE: Deleting a resource using the DELETE method is idempotent because deleting a resource that does not exist or has already been deleted results
+			in the same state (the resource being absent). Sending multiple identical DELETE requests has the same effect as sending it once.
+			
+	It's important to note that not all HTTP methods are idempotent. For example, POST requests, which are commonly used for creating new resources or performing
+	actions that result in state changes on the server, are generally not idempotent. Each repeated POST request may lead to the creation of a new resource or
+	trigger a different action on the server, potentially causing unintended side effects. Therefore, it's essential to design API endpoints carefully and choose
+	the appropriate HTTP methods to ensure idempotency where needed.

@@ -1,0 +1,300 @@
+Object-Oriented Programming (OOP) is a programming paradigm that organizes code into objects, which are instances of classes.
+It focuses on the concepts of encapsulation, inheritance, and polymorphism. Here are the key concepts of OOP:
+ - Objects: Objects are the fundamental building blocks of OOP. They represent real-world entities and have properties (attributes)
+			and behaviors (methods).
+ - Classes: Classes are blueprints or templates for creating objects. They define the properties and behaviors that objects of a
+			particular type (class) should possess. Objects are instances of classes.
+ - Encapsulation: Encapsulation is the principle of bundling data (attributes) and the methods (behaviors) that operate on that data
+				  into a single unit called a class. It provides data hiding, where the internal details of an object are hidden from
+				  the outside, and only the necessary information is exposed.
+ - Inheritance: Inheritance is a mechanism that allows classes to inherit properties and methods from other classes. It promotes code
+				reuse and hierarchical organization. A class that inherits from another class is called a subclass (or derived class),
+				while the class being inherited from is called the superclass (or base class).
+ - Polymorphism: Polymorphism means the ability of objects of different classes to be treated as objects of a common superclass. It
+				 allows methods to be written to accept objects of a superclass and its subclasses interchangeably. Polymorphism enables
+				 code flexibility and extensibility.
+ - Abstraction: Abstraction focuses on the essential features of an object, while hiding the unnecessary details. It allows you to create
+				abstract classes and methods that define a common interface for a set of subclasses. Abstract classes cannot be
+				instantiated and serve as a blueprint for concrete classes.
+ - Association: Association represents a relationship between two or more objects, where they are connected, but their lifecycles are not
+				dependent on each other. It can be a one-to-one, one-to-many, or many-to-many relationship.
+ - Composition: Composition is a strong form of association where objects are composed of other objects. The composed objects cannot exist
+				independently and are part of the whole. For example, a car is composed of an engine, wheels, and other parts.
+ - Aggregation: Aggregation is a weak form of association where objects are associated, but one object can exist independently of the other.
+				It represents a "has-a" relationship, where an object contains another object but doesn't control its lifecycle.
+---------------------------------------------------------------------------------------------------------------------------------------------
+The concepts of OOP in Java are aligned with the general concepts I mentioned earlier. Java is an object-oriented programming language that
+implements the principles of OOP. Here are the key concepts of OOP in Java:
+
+ - Classes and Objects: In Java, you define classes to create objects. A class serves as a blueprint that defines the properties (attributes)
+						and behaviors (methods) that objects of that class will have. Objects are instances of classes.
+ - Encapsulation: Java provides access modifiers (public, private, protected) to control the visibility and accessibility of class members
+				  (attributes and methods). This allows you to encapsulate the internal details of a class and expose only the necessary
+				  information to other classes.
+ - Inheritance: Java supports single inheritance, where a class can inherit properties and methods from a single superclass (base class).
+			    Inheritance allows for code reuse and the creation of class hierarchies. The extends keyword is used to inherit from a superclass.
+ - Polymorphism: Polymorphism in Java enables objects of different classes to be treated as objects of a common superclass or interface. It
+				 allows methods to be overridden in subclasses to provide different implementations. Polymorphism is achieved through method overriding
+				 and method overloading.
+ - Abstraction: Java supports abstraction through abstract classes and interfaces. Abstract classes cannot be instantiated but serve as a blueprint for
+				concrete classes. They can have both abstract and non-abstract methods. Interfaces define a contract of methods that a class implementing
+				the interface must provide.
+ - Association: Association represents a relationship between two or more classes. In Java, you can establish associations between classes using fields
+				that reference objects of other classes. For example, a "Car" class might have a "Driver" field of type "Person".
+ - Composition: Composition in Java is achieved by creating objects of one class within another class. The composed objects cannot exist independently
+				and are part of the whole. For example, a "Car" class might have an "Engine" object as a composition.
+ - Aggregation: Aggregation in Java represents a weak form of association, where one object has a reference to another object, but the associated object
+				can exist independently. It represents a "has-a" relationship. For example, a "University" class might have an aggregation relationship
+				with a "Department" class.
+---------------------------------------------------------------------------------------------------------------------------------------------
+Code for polymorphism:
+
+// Superclass
+class Animal {
+    public void makeSound() {
+        System.out.println("The animal makes a sound");
+    }
+}
+
+// Subclass 1
+class Dog extends Animal {
+    @Override
+    public void makeSound() {
+        System.out.println("The dog barks");
+    }
+}
+
+// Subclass 2
+class Cat extends Animal {
+    @Override
+    public void makeSound() {
+        System.out.println("The cat meows");
+    }
+}
+
+// Main class
+public class PolymorphismExample {
+    public static void main(String[] args) {
+        Animal animal1 = new Animal();
+        Animal animal2 = new Dog();
+        Animal animal3 = new Cat();
+
+        animal1.makeSound(); // The animal makes a sound
+        animal2.makeSound(); // The dog barks
+        animal3.makeSound(); // The cat meows
+    }
+}
+
+----------------------------------------
+Console output:
+The animal makes a sound
+The dog barks
+The cat meows
+---------------------------------------------------------------------------------------------------------------------------------------------
+Code for abstraction:
+
+// Abstract class
+abstract class Shape {
+    abstract void draw(); // Abstract method
+}
+
+// Concrete class implementing the abstract class
+class Circle extends Shape {
+    @Override
+    void draw() {
+        System.out.println("Drawing a circle");
+    }
+}
+
+// Concrete class implementing the abstract class
+class Rectangle extends Shape {
+    @Override
+    void draw() {
+        System.out.println("Drawing a rectangle");
+    }
+}
+
+// Interface
+interface Drawable {
+    void draw(); // Abstract method
+}
+
+// Concrete class implementing the interface
+class Triangle implements Drawable {
+    @Override
+    public void draw() {
+        System.out.println("Drawing a triangle");
+    }
+}
+
+// Main class
+public class AbstractionExample {
+    public static void main(String[] args) {
+        Shape shape1 = new Circle();
+        Shape shape2 = new Rectangle();
+        Drawable drawable = new Triangle();
+
+        shape1.draw();   // Drawing a circle
+        shape2.draw();   // Drawing a rectangle
+        drawable.draw(); // Drawing a triangle
+    }
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Code for association:
+
+// Student class
+class Student {
+    private String name;
+
+    public Student(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+// School class
+class School {
+    private String name;
+    private Student[] students;
+
+    public School(String name, Student[] students) {
+        this.name = name;
+        this.students = students;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Student[] getStudents() {
+        return students;
+    }
+}
+
+// Main class
+public class AssociationExample {
+    public static void main(String[] args) {
+        Student student1 = new Student("John");
+        Student student2 = new Student("Emma");
+        Student[] students = {student1, student2};
+
+        School school = new School("ABC School", students);
+
+        System.out.println("School: " + school.getName());
+        System.out.println("Students:");
+        for (Student student : school.getStudents()) {
+            System.out.println("- " + student.getName());
+        }
+    }
+}
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Code for composition:
+
+// Engine class
+class Engine {
+    private String type;
+
+    public Engine(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+}
+
+// Car class
+class Car {
+    private String brand;
+    private Engine engine;
+
+    public Car(String brand, Engine engine) {
+        this.brand = brand;
+        this.engine = engine;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public Engine getEngine() {
+        return engine;
+    }
+}
+
+// Main class
+public class CompositionExample {
+    public static void main(String[] args) {
+        Engine engine = new Engine("V8");
+        Car car = new Car("Toyota", engine);
+
+        System.out.println("Car brand: " + car.getBrand());
+        System.out.println("Engine type: " + car.getEngine().getType());
+    }
+}
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Code for aggregation:
+
+// Department class
+class Department {
+    private String name;
+
+    public Department(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+// University class
+class University {
+    private String name;
+    private Department department;
+
+    public University(String name, Department department) {
+        this.name = name;
+        this.department = department;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+}
+
+// Main class
+public class AggregationExample {
+    public static void main(String[] args) {
+        Department department = new Department("Computer Science");
+        University university = new University("ABC University", department);
+
+        System.out.println("University: " + university.getName());
+        System.out.println("Department: " + university.getDepartment().getName());
+    }
+}
+---------------------------------------------------------------------------------------------------------------------------------------------
+composition vs aggregation:
+
+Composition Example: A Car has an Engine. The Engine is an integral part of the Car, and if the Car is destroyed, the Engine is also destroyed.
+
+Aggregation Example: A University has Departments. The Departments exist independently and can be associated with multiple universities. Even
+					 if a University is closed, the Departments can still exist.
+
+Composition is a strong relationship where the composed objects cannot exist independently, while aggregation is a weak relationship where the
+		associated objects can exist independently.
+In composition, the container object fully owns the composed objects, whereas in aggregation, the associated objects are not owned by the
+		container object.
+Composition implies a "whole-part" relationship, while aggregation implies a "has-a" relationship.
+---------------------------------------------------------------------------------------------------------------------------------------------

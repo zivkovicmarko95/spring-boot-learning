@@ -1,0 +1,26 @@
+TCP (Transmission Control Protocol) is a widely used transport protocol in computer networks.
+TCP provides reliable, connection-oriented communication between devices over an IP network.
+
+Here are key features and characteristics of TCP:
+	- Reliable Communication:
+		TCP ensures reliable delivery of data by implementing mechanismssuch as acknowledgment,
+		retransmission, and sequencing. It guarantees that data sent from one device will be
+		received accurately and in the same order by the receiving device.
+	- Connection-Oriented:
+		TCP establishes a connection between two devices before data transfer begins. This
+		connection setup involves a handshake process, where the devices exchange control messages
+		to synchronize their communication parameters and establish the connection.
+	- Flow Control:
+		TCP includes flow control mechanisms to manage the rate of data transmission between devices.
+		It prevents the sender from overwhelming the receiver by dynamically adjusting the transmission
+		rate based on the receiver's ability to process the data.
+	- Byte Stream:
+		TCP treats data as a stream of bytes without any specific message boundaries. It breaks down the
+		application data into smaller segments, encapsulates them into TCP segments, and reassembles them
+		at the receiving end.
+	- Connection Termination:
+		TCP provides a graceful connection termination process. Devices exchange control messages to close
+		the connection properly.
+		
+TCP is widely used for applications that require reliable, error-free data transfer, such as web browsing,
+email, file transfer, remote access, and other network services.

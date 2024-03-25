@@ -1,0 +1,59 @@
+import javax.persistence.*;
+
+@Entity
+@Table(name = "images")
+public class Image {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Lob
+    @Column(name = "image_data")
+    private byte[] imageData;
+
+    // Constructors, getters, and setters
+}
+
+------------------------------------------------------------------------------------------------
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ImageRepository extends JpaRepository<Image, Long> {
+
+}
+
+------------------------------------------------------------------------------------------------
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+@Service
+@Transactional
+public class ImageService {
+
+    private final ImageRepository imageRepository;
+
+    public ImageService(final ImageRepository imageRepository) {
+        this.imageRepository = imageRepository;
+    }
+
+    public void storeImage(String imagePath) {
+        try {
+            byte[] imageData = Files.readAllBytes(Paths.get(imagePath));
+
+            Image image = new Image();
+            image.setImageData(imageData);
+
+            imageRepository.save(image);
+            System.out.println("Image stored successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Image storage failed.");
+        }
+    }
+}

@@ -1,0 +1,6 @@
+In Java, several methods from the Object class can be overridden in subclasses to provide custom behavior. Here are some of the most commonly overridden methods:
+	toString(): This method returns a string representation of the object. It is commonly overridden to provide a meaningful string representation of the object's state.
+	equals(Object obj): This method determines whether the current object is equal to another object. It is overridden to define custom equality criteria for objects.
+	hashCode(): This method returns a hash code value for the object, which is used when storing objects in hash-based data structures like HashMap or HashSet. It should be overridden whenever equals() is overridden.
+	clone(): This method creates and returns a copy of the object. It is overridden to provide a way to create a copy of an object with the same state.
+	finalize(): This method is called by the garbage collector before an object is reclaimed. It can be overridden to perform cleanup actions, but its usage is discouraged due to its unpredictable nature.

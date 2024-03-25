@@ -1,0 +1,65 @@
+In Java, variables are always passed by value. This means that when you pass a variable as a method argument,
+a copy of the variable's value is created and passed to the method. Any changes made to the parameter within
+the method do not affect the original variable outside the method.
+
+Passing Primitive Types:
+	public class Main {
+		public static void main(String[] args) {
+			int number = 10;
+			modifyPrimitive(number);
+			System.out.println(number); // Output: 10
+		}
+
+		public static void modifyPrimitive(int value) {
+			value = 20;
+		}
+	}
+
+Passing Object References:
+	#Example 1:
+	
+	public class Main {
+		public static void main(String[] args) {
+			MyClass myObject = new MyClass();
+			modifyObject(myObject);
+			System.out.println(myObject.getValue()); // Output: 20
+		}
+
+		public static void modifyObject(MyClass obj) {
+			obj.setValue(20);
+		}
+	}
+
+	public class MyClass {
+		private int value;
+
+		public int getValue() {
+			return value;
+		}
+
+		public void setValue(int value) {
+			this.value = value;
+		}
+	}
+	------------------------------------------------------------------
+	
+	#Example 2:
+	
+	public class Main {
+
+		 public static void main(String[] args) {
+			  Foo f = new Foo("f");
+			  changeReference(f); // It won't change the reference!
+			  modifyReference(f); // It will modify the object that the reference variable "f" refers to!
+		 }
+
+		 public static void changeReference(Foo a) {
+			  Foo b = new Foo("b");
+			  a = b;
+		 }
+
+		 public static void modifyReference(Foo c) {
+			  c.setAttribute("c");
+		 }
+
+	}

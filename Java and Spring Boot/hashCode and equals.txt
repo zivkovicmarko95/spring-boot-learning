@@ -1,0 +1,27 @@
+The hashCode() and equals() methods are important methods in Java that are used for object comparison and identification.
+Here's a brief explanation of their purpose:
+
+ - hashCode() method:
+	The hashCode() method is used to generate a unique integer value, known as a hash code, for an object.
+	The primary purpose of this method is to provide a mechanism for efficient object retrieval in hash-based
+	data structures like HashMap, HashSet, or Hashtable. These data structures rely on hash codes to quickly
+	locate objects.
+	The hashCode() method should be implemented consistently with the equals() method. That is, if two objects
+	are considered equal based on their equals() method, their hashCode() values should be the same. This ensures
+	that objects with the same logical equivalence produce the same hash code, facilitating correct behavior in
+	hash-based collections.
+
+ - equals() method:
+	The equals() method is used to compare two objects for logical equality. By default, the equals() method provided
+	by the Object class checks for reference equality, meaning it compares object references to determine if they refer
+	to the same memory location.
+	However, in most cases, you need to override the equals() method in your custom classes to define logical equality
+	based on specific criteria. Typically, you compare the fields of the objects to determine if they have the same
+	values. This allows you to define equality based on the semantics of your class.
+	When you override the equals() method, you should also ensure that it follows some general requirements, such as:
+		Reflexive: An object must be equal to itself.
+		Symmetric: If object A is equal to object B, then object B must be equal to object A.
+		Transitive: If object A is equal to object B, and object B is equal to object C, then object A must be equal
+					to object C.
+		Consistent: The result of equals() should be consistent during multiple invocations as long as the object's fields
+					haven't changed.

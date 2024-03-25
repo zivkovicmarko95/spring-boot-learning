@@ -1,0 +1,43 @@
+How do you check if the field is null or blank in the controller layer in the request body for bank TO that has a name and address?
+Name - not null
+Address - not null and not empty
+
+	To check if a field is null or blank in the request body for a bank transfer object (TO) that has a name and address in the controller layer
+	of a Spring Boot application, you can use validation annotations provided by Spring Framework. Here's how you can do it:
+
+	1. Add Validation Annotations to the Transfer Object:
+	Add validation annotations to the fields of the transfer object (TO) class to specify the constraints. For example, you can use @NotBlank to ensure that a field is not null or empty.
+	
+	public class BankTO {
+		@NotNull(message = "Name cannot be blank")
+		private String name;
+
+		@NotBlank(message = "Address cannot be blank")
+		private String address;
+
+		// Getters and setters
+	}
+	
+	2. Use @Valid Annotation in Controller Method Parameter:
+	In your controller method where you handle the request, use the @Valid annotation on the transfer object parameter.
+	This annotation triggers validation of the object based on the defined constraints.	
+	
+	import javax.validation.Valid;
+	import org.springframework.validation.annotation.Validated;
+
+	@RestController
+	@Validated
+	public class BankController {
+
+		@PostMapping("/bank")
+		public ResponseEntity<String> createBank(@Valid @RequestBody BankTO bankTO) {
+			// Handle the request
+		}
+	}
+	
+	3. Handle Validation Errors:
+	If the request body contains null or blank values for the name or address fields, Spring Boot will automatically perform validation and return a validation error response.
+	You can customize the error handling to return a more appropriate response to the client.
+	
+	By using validation annotations and @Valid in your controller layer, you can ensure that the fields in the request body are not null or blank before processing the request.
+	This helps maintain data integrity and prevents invalid data from being processed by your application.

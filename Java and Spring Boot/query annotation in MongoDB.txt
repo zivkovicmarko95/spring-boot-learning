@@ -1,0 +1,26 @@
+It is possible to use the @Query annotation with MongoDB when working with Spring Data MongoDB. The @Query annotation allows
+you to define custom queries using MongoDB's query language
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
+
+public interface StudentRepository extends MongoRepository<Student, String> {
+
+    @Query("{ 'age' : { $gt: ?0 } }")
+    List<Student> findByAgeGreaterThan(int age);
+
+    @Query("{ 'name' : { $regex: ?0, $options: 'i' } }")
+    List<Student> findByNameIgnoreCase(String name);
+}
+
+In this example, we have a Student entity class and a StudentRepository interface extending MongoRepository. Within the repository
+interface, we define two custom query methods using the @Query annotation.
+
+The first method findByAgeGreaterThan() demonstrates a custom query that retrieves students with an age greater than the specified
+value. The MongoDB query is defined within the @Query annotation using the JSON-like syntax.
+
+The second method findByNameIgnoreCase() shows a custom query that retrieves students with a case-insensitive match on the name field.
+The $regex operator is used within the @Query annotation to perform a regular expression match.
+
+You can define more complex queries using MongoDB's query language within the @Query annotation. The queries can include operators,
+comparison expressions, logical operators, and other MongoDB-specific features.

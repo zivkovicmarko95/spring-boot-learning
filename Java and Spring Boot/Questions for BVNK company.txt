@@ -1,0 +1,243 @@
+How to validate HTTP request parameters?
+
+	Client-Side Validation: Mention that client-side validation is important for providing immediate feedback to users and improving user experience.
+		JavaScript can be used for client-side validation to ensure that input fields meet certain criteria before the form is submitted.
+
+	Server-Side Validation: Highlight the importance of server-side validation to ensure data integrity and security. Server-side validation is essential
+		because client-side validation can be bypassed, either intentionally or unintentionally.
+
+	Framework Support: Discuss the use of frameworks and libraries that offer built-in validation features. For example, in a Java Spring Boot application,
+		you can use annotations such as @Valid and @RequestBody to automatically validate request parameters against predefined constraints.
+	
+	Custom Validation Logic: Explain that sometimes custom validation logic is required for specific business rules or data validation requirements that cannot
+		be handled by built-in validation mechanisms. You can implement custom validation logic by writing validator classes or methods to check request parameters
+		and return appropriate error messages if validation fails.
+
+	Handling Validation Errors: Emphasize the importance of handling validation errors gracefully by returning meaningful error messages to the client. This helps
+		users understand why their input was rejected and how they can correct it.
+		
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		
+Where would I put validation logic?
+	
+	In a typical application architecture, validation logic can be placed at multiple layers to ensure robust validation of HTTP request parameters. Here are some common places where validation logic can be implemented:
+	
+	Controller Layer: In MVC (Model-View-Controller) architectures like Spring MVC in Java or ASP.NET MVC in C#, validation logic is often implemented in the controller layer.
+		Controllers receive incoming HTTP requests, extract parameters from the request, and then validate them before processing the request further. This validation ensures
+		that only valid data is passed to the underlying business logic for processing.
+		
+	Service Layer: In more complex applications or those that follow a layered architecture, validation logic can also be implemented in the service layer. Service classes
+		encapsulate business logic and interact with repositories or data access objects (DAOs) to perform operations on data. By implementing validation logic in the service
+		layer, you centralize validation rules and ensure consistency across different controllers that use the same service.
+
+	Custom Validators: For more specialized validation requirements or complex validation rules, you can create custom validator classes. These validator classes can be standalone
+		components responsible for validating specific types of data or enforcing custom business rules. Custom validators can be used in conjunction with annotations (e.g., @Valid)
+		in frameworks like Spring Boot to automatically trigger validation based on defined constraints.
+		
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		
+How to make a controller method which serves HTTP POST requests? 
+	
+	To create a controller method that serves HTTP POST requests in a Spring Boot application, you can follow these steps:
+		Define a Controller Class: Create a Java class annotated with @RestController or @Controller to indicate that it's a Spring MVC controller.
+		Define a Method: Inside the controller class, define a method that will handle the POST request. Annotate the method with @PostMapping to specify that it should handle HTTP POST requests.
+		Method Signature: Define the method signature with appropriate parameters to receive the POST request body, request parameters, headers, etc., depending on your application's requirements.
+		Business Logic: Implement the business logic inside the method to process the incoming POST request data and perform any necessary operations.
+		Return Response: Optionally, return a response from the method to provide feedback to the client. This can be done by returning an object, a ResponseEntity, or using other methods available in Spring MVC.
+	
+	import org.springframework.http.HttpStatus;
+	import org.springframework.http.ResponseEntity;
+	import org.springframework.web.bind.annotation.PostMapping;
+	import org.springframework.web.bind.annotation.RequestBody;
+	import org.springframework.web.bind.annotation.RestController;
+
+	@RestController
+	public class MyController {
+
+		@PostMapping("/api/resource")
+		public ResponseEntity<String> handlePostRequest(@RequestBody String requestBody) {
+			// Process the incoming POST request body
+			System.out.println("Received POST request with body: " + requestBody);
+
+			// Perform business logic
+
+			// Return a response
+			String responseBody = "Response from server";
+			return ResponseEntity.status(HttpStatus.OK).body(responseBody);
+		}
+	}
+	
+	In this example:
+		The @RestController annotation is used to define the class as a REST controller.
+		The @PostMapping annotation specifies that the handlePostRequest method will handle HTTP POST requests for the /api/resource endpoint.
+		The @RequestBody annotation is used to bind the request body to the requestBody parameter.
+		Inside the method, you can process the request body and perform any necessary business logic.
+		Finally, a ResponseEntity is returned with an HTTP status of 200 (OK) and a response body containing a simple message. You can customize the response as needed based on your application requirements.
+
+	Remember to configure your application properly, including adding dependencies such as spring-boot-starter-web to enable Spring Boot's web capabilities.
+	
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+How I would handle exceptions? 
+
+	To handle exceptions in a Spring Boot application, you can use several techniques provided by Spring's exception handling mechanisms. Here's how you can handle exceptions in a controller method:
+		Using @ExceptionHandler: You can define an @ExceptionHandler method within your controller class to handle specific exceptions. This method will be invoked whenever the specified exception occurs in any of the controller methods.
+		Global Exception Handling: Spring Boot provides the @ControllerAdvice annotation, which allows you to define global exception handling across all controllers. You can annotate a class with @ControllerAdvice and define @ExceptionHandler methods within it to handle exceptions.
+		ResponseEntityExceptionHandler: Spring Boot also provides a convenient way to handle exceptions through ResponseEntityExceptionHandler. You can extend this class and override its methods to customize the handling of specific exceptions.
+	
+	Here's an example of how you can handle exceptions in a controller method using @ExceptionHandler:
+		import org.springframework.http.HttpStatus;
+		import org.springframework.http.ResponseEntity;
+		import org.springframework.web.bind.annotation.ControllerAdvice;
+		import org.springframework.web.bind.annotation.ExceptionHandler;
+		import org.springframework.web.bind.annotation.RestController;
+
+		@RestController
+		@ControllerAdvice
+		public class GlobalExceptionHandler {
+
+			@ExceptionHandler(Exception.class)
+			public ResponseEntity<String> handleException(Exception e) {
+				// Log the exception
+				System.err.println("An error occurred: " + e.getMessage());
+
+				// Return a ResponseEntity with an error message and status code
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+			}
+		}
+
+	In this example:
+
+		The @ExceptionHandler annotation is used to define a method that handles exceptions of type Exception.
+		Inside the method, you can log the exception and return an appropriate response to the client. Here, we're returning a 500 Internal Server Error status code along with a custom error message.
+		
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		
+How I would fetch an entity from a database?
+
+	To fetch an entity from a database in a Spring Boot application, you can use Spring Data JPA. Spring Data JPA provides repositories that allow you to interact with the database using
+	a simple interface without writing boilerplate code for database operations. Here's how you can fetch an entity from a database using Spring Data JPA:
+
+	Define an Entity: First, define an entity class representing the database table. Annotate the class with @Entity and specify the table name using @Table.
+	
+		import javax.persistence.*;
+
+		@Entity
+		@Table(name = "users")
+		public class User {
+			@Id
+			@GeneratedValue(strategy = GenerationType.IDENTITY)
+			private Long id;
+
+			private String username;
+			private String email;
+
+			// Getters and setters
+		}
+
+	Create a Repository Interface: Create a repository interface for the entity by extending the JpaRepository interface provided by Spring Data JPA. Define custom query methods if needed.
+		
+		import org.springframework.data.jpa.repository.JpaRepository;
+
+		public interface UserRepository extends JpaRepository<User, Long> {
+			// Define additional query methods if needed
+		}
+
+	Inject the Repository: Inject the repository interface into your service or controller class where you want to fetch the entity.
+
+		import org.springframework.stereotype.Service;
+
+		@Service
+		public class UserService {
+			private final UserRepository userRepository;
+
+			public UserService(final UserRepository userRepository) {
+				this.userRepository = userRepository;
+			}
+
+			public User getUserById(final Long id) {
+				return userRepository.findById(id).orElseThrow(() -> new RuntimeException(String.format("Entity with ID %s is not found", id)));
+			}
+		}
+		
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+What is a pupose of @Trasnactional annotation?
+	
+	The @Transactional annotation in Spring provides declarative transaction management for methods or classes. It is used to demarcate transaction boundaries,
+	meaning it specifies the scope of a single transaction.
+
+	The purpose of the @Transactional annotation includes:
+
+		Managing Transactions: It allows you to specify transactional behavior for methods or classes without explicitly managing transactions programmatically.
+		Starting and Committing Transactions: When a method annotated with @Transactional is invoked, a transaction is started before the method is executed,
+			and the transaction is committed after the method completes successfully.
+		Rolling Back Transactions: If an exception occurs during the execution of a method annotated with @Transactional, the transaction is rolled back, ensuring
+			data consistency and integrity.
+		Transaction Propagation: The @Transactional annotation supports various propagation behaviors, such as REQUIRED, REQUIRES_NEW, NESTED, etc., which define
+			how transactions are propagated when methods are called within the same or different transactional contexts.
+		Isolation Levels: It allows you to specify isolation levels for transactions, defining the degree to which one transaction must be isolated from the effects
+			of other concurrently executing transactions.
+		Read-only Transactions: You can configure transactions to be read-only using the readOnly attribute of the @Transactional annotation, which can improve performance
+			by avoiding unnecessary locking and logging.
+	
+	Overall, the @Transactional annotation simplifies transaction management in Spring applications, promoting cleaner code and reducing boilerplate transaction handling logic.
+	It is commonly used in service layer methods that interact with the database to ensure data consistency and integrity.
+	
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+If you have checked and unchecked exceptions in which case transaction will rollback in which case it will not:
+	
+	In Java, transactions are typically rolled back for unchecked exceptions, which are subclasses of RuntimeException.
+	These unchecked exceptions are considered critical errors that indicate a failure in the application logic or system state.
+	Common unchecked exceptions include NullPointerException, IllegalArgumentException, IllegalStateException, IndexOutOfBoundsException, and RuntimeException.
+	When an unchecked exception occurs within a transactional context and is not caught and handled within that context, the transaction will be automatically rolled back by default.
+	On the other hand, checked exceptions, which are subclasses of Exception but not subclasses of RuntimeException, do not usually trigger a transaction rollback by default. Checked exceptions are considered recoverable errors, and the application can choose to handle them without necessarily rolling back the transaction.
+	However, you can configure specific checked exceptions to trigger a transaction rollback using annotations like @Transactional in Spring Framework. For example:
+	
+	import org.springframework.transaction.annotation.Transactional;
+
+	@Transactional(rollbackFor = {SomeCheckedException.class})
+	public void someTransactionalMethod() throws SomeCheckedException {
+		// Transactional code
+		if (someCondition) {
+			throw new SomeCheckedException();
+		}
+	}
+	
+	In this example, if SomeCheckedException is thrown, the transaction will be rolled back because it's explicitly configured to do so.
+	In summary:
+		Unchecked exceptions (i.e., subclasses of RuntimeException or Error) usually result in automatic rollback of the transaction.
+		Checked exceptions (i.e., subclasses of Exception that are not RuntimeExceptions) generally do not trigger automatic rollback but can be configured to do so if needed.
+		
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+How to define exceptions that should rollback the transaction:
+
+	To define exceptions that should trigger a rollback of the transaction while using Spring's declarative transaction management, you can use the rollbackFor attribute in the @Transactional annotation.
+	Here's an example of how you can define the rollbackFor attribute to specify which exceptions should trigger a rollback:
+	
+	import org.springframework.transaction.annotation.Transactional;
+
+	@Transactional(rollbackFor = Exception.class)
+	public void yourTransactionalMethod() {
+		// Your transactional logic here
+	}
+	
+	In this example, Exception.class is specified in the rollbackFor attribute, which means that any exception of type Exception or its subclasses will cause the transaction to be rolled back.
+	
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+How to define the only one exception that should NOT rollback the transaction:
+
+	To define an exception that should not trigger a rollback of the transaction while using Spring's declarative transaction management, you can specify a noRollbackFor attribute in the @Transactional annotation.
+	Here's an example of how you can define the noRollbackFor attribute to exclude a specific exception from causing a rollback:
+
+	import org.springframework.transaction.annotation.Transactional;
+
+	@Transactional(noRollbackFor = SpecificException.class)
+	public void yourTransactionalMethod() {
+		// Your transactional logic here
+	}
+	
+	In this example, SpecificException is the exception type that you want to exclude from triggering a rollback. When SpecificException occurs within the yourTransactionalMethod(), the transaction will not be rolled back.

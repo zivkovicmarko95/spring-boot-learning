@@ -1,0 +1,49 @@
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "images")
+public class Image {
+    @Id
+    private String id;
+    private byte[] imageData;
+
+    // Constructors, getters, and setters
+}
+
+-----------------------------------------------------------------------------------
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface ImageRepository extends MongoRepository<Image, String> {
+}
+
+-----------------------------------------------------------------------------------
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+@Service
+public class ImageService {
+    private final ImageRepository imageRepository;
+
+    @Autowired
+    public ImageService(ImageRepository imageRepository) {
+        this.imageRepository = imageRepository;
+    }
+
+    public void storeImage(MultipartFile file) {
+        try {
+            byte[] imageData = file.getBytes();
+
+            Image image = new Image();
+            image.setImageData(imageData);
+
+            imageRepository.save(image);
+            System.out.println("Image stored successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Image storage failed.");
+        }
+    }
+}

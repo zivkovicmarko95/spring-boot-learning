@@ -1,0 +1,6 @@
+Spring IoC (Inversion of Control): In Spring IoC, the control over the object creation and management is shifted from your application code to the Spring container.
+Instead of your code directly creating objects, Spring IoC container creates and manages the objects of your application, promoting modularity and easier maintenance.
+
+Dependency Injection: Dependency Injection is a key concept in Spring IoC. It refers to the process of providing the necessary dependencies
+(such as objects, services, or configuration values) to a class from the outside. Spring IoC container injects these dependencies into the objects
+(usually via constructor, setter, or method injection), reducing tight coupling between components and making the system more flexible, testable, and easier to manage.

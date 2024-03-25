@@ -1,0 +1,61 @@
+Stack:
+	The stack is a region of memory used for static memory allocation, typically organized in a Last-In-First-Out (LIFO) data structure.
+	It stores local variables, method calls, and function parameters.
+	Memory allocation and deallocation on the stack are handled automatically by the compiler and happen in a fast and deterministic manner.
+	The stack size is usually limited, and its memory is reclaimed when a function or block of code completes execution.
+	
+Heap:
+	The heap is a region of memory used for dynamic memory allocation, often organized in a more complex data structure.
+	It is used to allocate objects and data structures with variable lifetimes.
+	Memory allocation and deallocation on the heap are managed explicitly by the developer or through automatic memory management systems like the Java garbage collector.
+	The heap size is typically larger than the stack, and memory allocation can be less deterministic and slower.
+	
+Java Garbage Collector:
+	It periodically identifies and collects unreferenced objects in the heap to reclaim their memory and prevent memory leaks.
+	When the garbage collector runs, it performs a mark-and-sweep process:
+		Marking:
+			The garbage collector identifies which objects are reachable and still in use by traversing the object graph, starting from the root objects.
+		Sweeping:
+			The garbage collector deallocates memory for the objects that are not marked as reachable. It frees the memory occupied by those objects,
+			making it available for future allocations.
+	When the garbage collector cleans the resources, it typically suspends the application's execution momentarily, so it can safely scan and clean the heap.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+In most programming languages, including Java, the memory on the stack is automatically cleaned up without any explicit action from the developer. The cleanup is handled
+by the compiler and runtime system.
+
+The stack follows a Last-In-First-Out (LIFO) structure, where the most recently allocated memory is the first to be deallocated. When a function or block of code completes
+its execution, the memory allocated for its local variables and function call information is automatically freed.
+
+The stack memory cleanup is performed by the runtime system using a mechanism called stack unwinding. As functions or blocks exit, the runtime system adjusts the stack
+pointer, effectively discarding the memory allocated for those entities. This happens automatically and is typically very efficient.
+
+The cleanup on the stack is deterministic, meaning it occurs as soon as a function or block finishes its execution. This deterministic behavior ensures that local variables
+are automatically deallocated and the memory they occupy is immediately available for reuse.
+
+It's important to note that the stack memory cleanup is limited to the memory allocated for function calls, local variables, and other related data structures. It does not
+involve managing dynamically allocated memory, which is typically handled on the heap. The cleanup of dynamically allocated memory on the heap is the responsibility of the
+garbage collector or manual memory management, depending on the programming language and memory management approach being used.
+
+In summary, the memory on the stack is automatically cleaned up as functions or blocks complete their execution, following the LIFO structure. The cleanup process is
+deterministic and handled by the runtime system without any explicit action needed from the developer.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+This stack cleanup and garbage collector that cleans heap memory, does those two processes work together?
+
+	While the stack cleanup and garbage collector are both involved in managing memory, they operate independently and serve different purposes in memory management.
+
+	The stack cleanup primarily deals with the deallocation of memory on the stack, specifically related to function calls, local variables, and other stack-related data structures.
+	It follows a deterministic process, where memory is automatically freed as functions or blocks of code complete their execution. The stack cleanup does not involve managing dynamically
+	allocated memory on the heap.
+	
+	On the other hand, the garbage collector is responsible for managing dynamically allocated memory on the heap. It scans the heap for objects that are no longer reachable or referenced
+	by the program and reclaims their memory. The garbage collector performs this task periodically or when certain conditions are met. It uses algorithms such as mark-and-sweep, copying,
+	or generational collection to identify and collect unreferenced objects, making the memory they occupy available for reuse.
+
+	While the stack and heap are separate regions of memory, they can interact indirectly. For example, when a method is called, the function arguments and return address may be stored on
+	the stack, while the method's local variables are typically allocated on the stack as well. However, the actual objects created within the method, which are often allocated on the heap,
+	are managed by the garbage collector.
+	
+	In summary, the stack cleanup and garbage collector are separate mechanisms that work independently but contribute to overall memory management. The stack cleanup deals with the automatic
+	deallocation of stack-related memory, while the garbage collector manages the dynamic allocation and reclamation of memory on the heap.

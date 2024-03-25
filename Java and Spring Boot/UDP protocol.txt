@@ -1,0 +1,17 @@
+UDP (User Datagram Protocol) is another widely used transport protocol in computer networks, alongside TCP. Unlike TCP, UDP is a connectionless protocol,
+which means it does not establish a connection before sending data. Here are key features and characteristics of UDP:
+
+	Unreliable Communication:
+		UDP does not guarantee reliable delivery of data. It provides a best-effort delivery mechanism, where packets may be lost, duplicated, or delivered out of order.
+		There are no mechanisms for acknowledgment, retransmission, or sequencing in UDP.
+	Connectionless:
+		UDP does not establish a connection before sending data. Each packet is treated independently, and there is no handshaking process between the sender and receiver.
+	No Flow Control:
+		UDP does not include flow control mechanisms. It does not manage the rate of data transmission between devices, so the sender can overwhelm the receiver.
+	Datagram Oriented:
+		UDP treats data as independent datagrams or packets. Each packet has its own header containing source and destination port numbers, checksum, and other control information.
+	Lightweight:
+		UDP is lightweight compared to TCP because it has fewer features and overhead. It is suitable for applications where low latency and minimal overhead are more important
+		than reliability, such as real-time streaming, online gaming, VoIP (Voice over Internet Protocol), and DNS (Domain Name System) queries.
+
+In summary, UDP prioritizes speed and simplicity over reliability and connection management, making it suitable for certain types of applications where occasional packet loss or out-of-order delivery is acceptable.

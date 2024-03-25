@@ -1,0 +1,17 @@
+Authentication and authorization are two distinct concepts related to security in software systems. Although they are often used together, they serve different purposes:
+
+Authentication:
+	- Authentication is the process of verifying the identity of a user or entity. It ensures that the claimed identity is valid and matches the provided credentials.
+	- Authentication answers the question, "Who are you?" and establishes trust between the user/entity and the system.
+	- It typically involves validating credentials such as usernames, passwords, tokens, or certificates provided by the user or client.
+	- Successful authentication grants the user/entity access to the system, allowing them to proceed with authorized actions.
+
+Authorization:
+	- Authorization is the process of granting or denying access to specific resources or functionalities based on the authenticated user's permissions or roles.
+	- Authorization answers the question, "What are you allowed to do?" and determines whether the user/entity has the necessary privileges to perform a particular operation.
+	- It involves defining and enforcing access control policies, permissions, and restrictions.
+	- Authorization ensures that authenticated users can only access or perform actions that they are authorized to, based on their assigned roles, permissions, or other
+	access control mechanisms.
+	
+In summary, authentication focuses on validating the identity of a user or entity, whereas authorization determines what actions or resources the authenticated user or entity
+can access or manipulate. Authentication establishes trust, while authorization governs access rights and permissions.

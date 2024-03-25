@@ -1,0 +1,530 @@
+What is SaaS?
+
+https://www.fullstack.cafe/blog/solution-architect-interview-questions
+
+https://www.codeusingjava.com/interview/arch
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+What do software architects do?
+Software architects are expert, professional developers who share information between software engineering teams and clients to implement precise software design solutions. Some of their primary responsibilities are:
+
+Project code QA testing
+
+Task distribution for software engineer teams
+
+Technical standards evaluation
+
+Breaking down project goals into deliverable tasks
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Explain what KISS means.
+KISS means “keep it simple, stupid.” In the software architect field, KISS implies that a system will function best when a developer or architect takes a simple approach to designing. It suggests that architects should avoid complex designs. 
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+CAP theorem suggests that distributed computer systems can only deliver two out of the following three guarantees:
+
+	Consistency: Every node sees the same data even when concurrent updates occur.
+	Availability: All requests receive responses on whether it was a success or a failure.
+	Partition tolerance: The system will keep operating even if there is a partition in communication between two different nodes
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Which technical skills are required to be a successful software architect?
+As well as knowledge of unified modeling language (UML), software architects need to have skills in various programming languages. They should also understand agile management and collaboration methods so they can align development and operations.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+What is your approach to task delegation?
+It’s essential to get the right balance between delegating all tasks and completing every task without team support. Individual initiative is vital, but so is relying on your team.
+
+The candidates you should watch out for are those who explain clearly that keeping an eye on the team and the tasks that have been delegated is important.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+What is the DRY principle?
+DRY means “don’t repeat yourself.” This principle is used in software development to keep software pattern repetition to a minimum.
+Instead of repetition, data architects replace redundancy with abstractions or data normalization, and the DRY principle makes it easier to maintain code.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+What is the DIE principle?
+DIE in software development is an acronym that means “duplication is evil.” The DIE principle is used in the same situations as the DRY principle and aims to ensure that
+software architects and developers avoid duplicating concepts. It also contributes to efficient code maintainability.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+SOLID - presentation
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+ACID - presentation
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Describe four best practices for performance testing.
+Four best practices for performance testing include:
+	Defining the scope and making a plan
+	Testing components together and separately
+	Sticking to agile approaches
+	Testing early and frequently
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Explain what YAGNI means.
+YAGNI is a principle of software development and software architecture design. It means “you aren’t gonna need it” and refers to the concept that programmers should only add features when strictly required.
+
+YAGNI principles are used during continuous refactoring, continuous integration, and continuous unit testing, helping to reduce reworking and technical debt.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Explain what sharding is.
+Sharding is a method software architects use to split and store one logical dataset within several databases. Such distribution in several machines facilitates the ability to store a bigger dataset.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Explain what cohesion means in software architecture.
+When software architects divide a system into modules, cohesion measures the extent to which all elements that belong to the module are functionally related. Some of the main types of cohesion include:
+
+Communicational cohesion
+
+Functional cohesion
+
+Sequential cohesion
+
+Procedural cohesion
+
+Temporal cohesion
+
+Logical cohesion
+
+Coincidental cohesion
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Explain what coupling means in software architecture.
+Coupling refers to the extent to which each module, or each component, depends on another module.
+
+If two modules are tightly coupled, they are highly dependent on each other. If they are loosely coupled, they don’t rely on each other as much. If two modules are uncoupled, they are not interdependent.
+
+There are many different examples of coupling in modules:
+
+No coupling
+
+Content coupling
+
+Common coupling
+
+Control coupling
+
+External coupling
+
+Stamp coupling
+
+Data coupling
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Explain why layering an application is vital.
+Layering the architecture of an application is critical because it makes it easier to add additional features.
+
+It’s also much simpler to make changes to the most current features since a software architect will know what all the individual parts of the application do.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+How do you dodge a database deadlock?
+I would create a queue to validate each request before sending it to the database to prevent the database from entering a cyclic wait stage.
+Using fewer cursors to prevent locking the tables is another approach to get around this problem. Another method to prevent a database deadlock is to use a short transaction.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+How can you differentiate Hibernate from JDBC?
+Hibernate and JDBC's respective architectural distinctions impact how they are utilized. One of the main differences is that JDBC lacks an object-relational mapping
+(ORM) mechanism, whereas Hibernation has one.
+
+Regarding caching, the two also differ from one another. Hibernate features a caching system that stores data for later use, unlike JDBC, which does not. This
+method works in conjunction with its automatic object mapping functionality. As a result, JDBC starts up a little quicker than the Hibernate.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Define message-driven design and list its advantages?
+By applying standardized message-oriented middleware to deliver messages from one module to another module, message-driven architecture aims to connect distributed systems.
+
+It is asynchronous and non-blocking.
+System resources can be released instantly without having to wait for a response. It lowers contention and increases the likelihood of greater scalability.
+Messages can be sent when the recipient is available.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Describe Domain Driven Design?
+Domain-driven design is a technique and process prescription for creating complex systems that focuses on translating activities, processes, events, and data from a
+problem domain into the technical objects of a solution area. Making your program a realistic depiction of a system or process is key.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+How to dodge the Lazyinitializationexception?
+Follow these steps shown below to avoid the Lazyinitializationexception in Java:
+
+Lazy is set as false in the config file of hibernating.
+Set @Basic(fetch=FetchType.EAGER) at the mapping.
+Make sure you access the dependent objects before closing the session.
+Using Fetch Join in HQL.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Tell us about the differences between a local variable and an instance variable?
+A local variable is utilized within a method, block, or constructor– and is specific to that scope. A variable not local to its scope won't be known to other methods or blocks in the class.
+On the other hand, an instance variable is linked to its object. These variables are declared outside of the procedure but inside of a class. The instance variable is accessible to all the class's methods and blocks in this manner.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+State the differences between Monolithic, SOA, and Microservices Architecture?
+The LTS version's goal is to finish the preview features and make them reliable and presentable over the following three years:
+
+In a monolithic architecture, all the software components of the application are integrated and firmly wrapped inside a big container.
+A collection of services that communicate with one another is service-oriented architecture. Simple data transfer or the coordination of such actions by two or more services are both examples of communication.
+Microservice Architecture is a type of architectural design that builds applications as a collection of tiny, independent services based on a business domain.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+What are the most typical memory leaks, and how do you think you would deal with them?
+Memory leakage through static fields:
+The frequent use of static variables is one scenario that frequently leads to memory leaks. When using static variables, we must be careful. Collections and huge objects designated as static take up valuable memory that may be used elsewhere during the program's lifetime.
+
+Reduce the use of static variables and, when using singletons, implement them so that the object is loaded slowly rather than quickly.
+
+Unclosed resources:
+Java memory leaks can occur if you don't remove a reference to an object or fail to close a resource. Unclosed file/text buffers Improper equals() and hashCode() implementations. 
+It's common to overlook including appropriate overrides for the equals() and hashCode() methods while developing new classes.
+These actions are performed by HashSet and HashMap using these methods, and if they are incorrectly overridden, memory leaks may result.
+
+In this case, duplicate objects will accumulate and take up more memory if we don't override the equals() and hashCode() methods in the Employee class, which is why many instances will be produced in memory.
+As a result, this Map would only contain one Employee object if we had overridden the equals() and hashCode() methods in the Employee class.
+
+finalize() Methods
+The objects of a class that have to finalise() function overridden are not instantly disposed of. Instead, they are placed in a queue for the GC to finalize later.
+Additionally, our application will eventually run into an OutOfMemoryError if the finalise() method's logic is inefficient, and the finalizer queue cannot keep up with the Java garbage collector.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+When should someone use a NoSQL database rather than a relational database?
+In relational databases, the ACID is enforced. As a result, transaction-oriented schema-based data storage is possible. It is tried and true for 99 percent of applications in the real world. With relational databases, practically anything is possible.
+
+There are performance and scalability restrictions regarding large, high-availability data warehouses. Terabytes of data, for instance, are kept in huge data centers like Google and Amazon. Because of the blocking, schema, and transactional characteristics of the RDBMS in these situations, querying and inserting are unsuccessful.
+
+They have therefore introduced their databases to greatly improve performance and allow for scaling (actually, key-value stores).
+
+When the client demands 99.999 percent availability at busy sites, we typically employ NoSQL databases.
+Your data is illogical in SQL, and you frequently need to run several JOIN queries to get a single piece of data.
+The relational model is separated, denormalized data is stored in CLOBs, and external indexes are built to find that data.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+How can one do database migration?
+
+Flyway and LiquiBase. Use FlyWay
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+What technologies and tools do you use to look out for performance bottlenecks?
+To find performance bottlenecks, a variety of methods and technologies are available. Among the most well-liked are:
+
+New Relic: It's a software analytics platform that aids in real-time application monitoring. I can discover and address bottlenecks quickly because of the extensive performance insights it offers.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+How do you go about creating a project's scalable architecture?
+Java architects' top issue is scalability. I take the project's predicted expansion into account when creating a scalable architecture. You must create an architecture that can manage more data and traffic without stuttering or crashing. When creating a scalable architecture, the following factors must be considered:
+
+Use scalable components: Decide on components that can be expanded vertically or horizontally by adding new instances (by adding more resources to a single instance).
+Designing failure: Consider the possibility of anything going wrong when designing your building. Redundancy must be used, and fail-over systems must be in place.
+Monitor performance: This will help you find bottlenecks and other potential problems. To keep everything functioning properly, be ready to modify the architecture as necessary.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+How are production Spring Boot applications managed and watched over?
+A Spring Boot sub-project called Spring Boot Actuator gives your production-ready apps new monitoring and management features. It provides a variety of HTTP or JMX endpoints for communication.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Can you tell us how exactly Design Principles are different from Design Patterns?
+The guiding principles for all software development, regardless of platform or programming language, are known as design principles.
+
+Design Principles Examples:
+Abstraction as a source of dependency rather than concrete classes.
+This program's primary emphasis is on interfaces rather than implementations.
+Design patterns are solutions to often occurring generic problems, but they are not exact programs that can be utilized to solve your problem; rather, you must modify them to meet your needs. Design Patterns are pre-existing solutions that have undergone extensive testing and are secure to use.
+Design Patterns Examples:
+To separate, distinct layers of the application(Business Repository, Data Repository), utilize the repository design pattern.
+Use the single design pattern if you need one instance of a class.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+What can assets besides the architecture itself be considered members of a product line?
+An asset collection is made up of various elements such as:
+
+Reusable Components: While not directly related to code reuse, this item incorporates and makes use of every component from previously built and successful system sections. This entails reusing the structure, design, documentation, and other aspects of the component.
+Personnel can move easily between projects and pick up on changes if the products have the same structure.
+Finding and correcting a problem in a project where a component is reused helps with other projects.
+It is easier to plan a project when you have prior knowledge of how it will perform, which is a challenge that impacts all goods to some extent.
+There is an increase in predictability. Because of how they were previously formed and understood, processes, methods, and instruments are routinely recycled.
+The advantage of observing systems in operation and functioning is that it shows a company's capacity to keep its promises.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+What is Cloud Computing? Mention the benefits of the same.
+A computer system based on the internet called "cloud computing" enables storage and online access to digital data and applications.
+
+Access to storage, software, processing power, and other resources is available instantly, thanks to the internet. The cost of the available storage and services must be covered by the technology's users.
+Significant aspects include scalability and elasticity, self-service billing, automatic de-provisioning, and self-service provisioning.
+One of the main benefits of the service is the absence of capital expenses for software and hardware acquisitions.
+Cloud computing's tremendous server capabilities increase access speed. Additionally, it provides secure backups, a ton of storage, and increased productivity.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+What are the main parts of the JVM?
+Three distinct parts make up the JVM:
+
+ClassLoader.
+Runtime Memory/Data Area.
+Execution Engine.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+What is heap memory in Java?
+The region of memory used to hold objects created by JVM-based applications is the Java heap. As long as the program runs, heap memory is allocated when the JVM is started and any items can be shared between threads
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+How many architectures are there in Java?
+JVM, JRE, and JDK are the three primary parts of the Java language. Their full forms are Java Development Kit, Java Virtual Machine, and Java Runtime Environment, respectively.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Tell us about the differences between JDK, JRE, and JVM?
+JDK is largely used for code execution and contains essential development functionality. JRE, on the other hand, is mostly in charge of building the environment for code execution. On the other hand, JVM describes every implementation and oversees giving JRE these implementations.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+What is JDBC architecture?
+Java Database Connectivity (JDBC) API specifies interfaces for accessing relational databases. JDBC facilitates connecting to a database, sending queries and updates therein, and retrieving and processing the database's results for queries.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Explain Continuous Integration, Continuous Delivery, and Continuous Deployment
+
+Answer: In the current software industries, DevOps helps with Continuous integration, delivery, and deployment for agile environments all done using automated scripts.
+
+Continuous Integration
+
+In the agile development environment, developers integrate their changes to the central repository that contains builds multiple times in a day. These builds are stored based on their version in version control systems like Git, SVN, or CVS.
+
+The changed code files added are validated for syntax style, code quality, and compile-time error using automated tests before final integration with the build during release.
+
+Continuous Delivery
+
+It is an extension of continuous integration, where the changes to your codebase can be deployed to the testing or development environment on a successful build. With continuous delivery, there is an improvement in velocity, productivity, and sustainability. You can plan to release your codebase daily, weekly, or deploy production quickly with continuous delivery.
+
+Continuous Deployment
+
+Based on well-designed and reliable test automation, releasing developer changes to the codebase from the version control repository to production is defined as continuous deployment. Improved productivity, the real-time response of developers to market demands, and any defects and release of daily stress have become things of the past with continuous deployment.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Explain Domain-driven Design.
+
+Answer: Domain-driven Design focuses on core domain and business logic related to domain problems, with a complex design based on domain models and collaborations with domain and technical experts to resolve specific domain problems. The domain model consists of data, goals, metrics, ideas, and knowledge about the domain problem to be resolved.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+What are the twelve-factor application principles?
+
+Answer: The twelve-factor app methodology is used in order to build software as a service. It is applied to all applications written in any programming language and uses a combination of cache, database, memory, and queue as backing services.
+
+The twelve factors are as listed below:
+
+Admin processes: Automated scripts for the admin task can be packaged along with the application or in source control to ensure they run in the same environment like that of an application.
+Build, release, run: The delivery pipeline should have three separate stages—build, release and run.
+Backing services: backing services like database, SMTP, or FTP server, web services should be treated as attached services and should be managed by the execution environment.
+Codebase: Maintain the one-to-one association between versioned codebases. Use branches for different versions to avoid complexity with a repository.
+Configuration: Environment-specific configuration should be stored in the environment and not in the application.
+Concurrency: The application should handle load-balanced requests for multiple identical nodes running simultaneously and scale horizontally for the processes and threads in parallel execution using a feature of handling multithreading in a Java virtual machine.
+Dependencies: The services running in the application should declare dependencies explicitly and should not rely on system-level libraries or tools. You can install apache maven to maintain application dependencies.
+Disposability: Application processes should be disposable, and applications should have a quick start-up and graceful shutdown process. During the shutdown, it should not accept any new tasks but allow the existing tasks to complete.
+Development/Production parity: The gap between application development, test environment, and production deployment should be minimal.
+Logs: The application when executed, should have logged as a stream of events that should be integrated with ELK stack or Splunk as centralized logging.
+Processes: Application transient processes should not share anything and are stateless in nature. The backing services should be present to store persistent data.
+Port binding: Applications should be self-contained and accessible to HTTP ports
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+List the benefits of sharding in the database.
+
+Answer: In Sharding single dataset is distributed across multiple databases and eventually stored on multiple machines.
+
+Benefits database sharding offer is listed below:
+
+Improved Read/Write Throughput: With reading and write operations assigned to a single shard, and dataset distributed across multiple shards. The capacity for reading and writing operations is enhanced.
+Enhanced Storage Capacity: Capacity to store increases with infinite scalability on increasing shards count.
+High availability: Shard offers higher availability in two ways – First, with each shard a replica set, each data is replicated. Second, the entire shard becomes unavailable for distributed data, the database remaining partially functional, and part of the schema on different shards.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+List the difference between the local variable and instance variable in Java.
+
+Answer: Java has three variable types – class variable, instance variable, and local variable
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+List the beneficiaries of API reusability.
+
+Answer: Using API functionality for multiple applications instead of creating new ones for each application is known as API reusability.
+
+There are two beneficiaries of API reusability:
+
+Information is shared internally for multiple applications for utilization. For example, API designed to manage inventory can also be utilized for e-commerce order updates by the marketing team, resource management by the human resource team, as well as the ERP system.
+Third parties use the API for retrieving information, for example, the payment gateway API application is integrated with multiple payment options used by third parties. The customization, like payment using foreign currency, can be applied as a wrapper to this API.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+List the difference between SOAP and REST services.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+List the difference between API and web service.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Select which one is a better option – you store session info or use session info in the request.
+
+Answer: Storing session info is a better option than using session info in a request, as the latter option is vulnerable and can be intercepted. The respective domain can only access session info stored in cookies in order to ensure the right session information is provided by the user.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+What are the main differences between the first-level and second-level cache in Hibernate?
+
+Answer: The first-level cache in Hibernate is accessible to Sessions and maintained at the Session level whereas the second-level cache is available to all Sessions and maintained at the SessionFactory level.
+
+For the second-level cache–concurrency strategy to be decided, cache expiration and physical cache attributes need to be configured. The first-level cache does not need any additional configuration.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+What are the ways to improve application performance that needs improvement in database communication?
+
+Answer: The following steps will improve application performance that needs improved database communication:
+
+Optimization of queries using rewriting queries and using Prepared Statements.
+Restructuring of Indexes.
+Tuning of DB caching when ORM tool like Hibernate is used,
+Identifying problems with ORM strategy if used.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Explain with reason what approach you would choose in code implementation – inserting a record or updating if the record already exists.
+
+Insert record in a database table, if an exception occurs, update an existing record.
+Verify if the record exists and update if the record exists, or else insert a new record.
+Answer: Decision on the selection of approach will depend on
+
+Are we using hibernate indices, and how costly is a call to the database Approach 1 should be selected if the DB call is costly.
+The advantage of using the 1st call to DB in the first approach should be bigger than Bookkeeping for exceptions.
+If the DB table is empty, using the 1st approach will make sense, as it will pass without any exception.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+We want to make sure our applications are scalable. How would you design a scalable application using Java?
+This question allows you to show your knowledge of Java and how it can be used in a scalable way. You should answer this question by explaining the steps you would take when designing an application that is scalable.
+
+Example: “I understand that scalability is a key requirement for your applications. As an experienced Java Architect, I have extensive experience in designing scalable applications using Java.
+
+When it comes to scalability, my approach is to design the application architecture with modularity and loose coupling in mind. This allows me to easily add new features or scale existing ones without having to make major changes to the codebase. I also use technologies such as microservices and containerization to ensure that components can be scaled independently of each other.
+
+In addition, I always strive to optimize performance by leveraging caching techniques and asynchronous processing whenever possible. Finally, I leverage cloud-based services like AWS Lambda to further improve scalability and reduce costs.”
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+What Is Scalability?
+
+Scalability is the ability of a system, network, or process to handle a growing amount of load by adding more resources. The adding of resource can be done in two ways  
+	Scaling Up - This involves adding more resources to the existing nodes. For example, adding more RAM, Storage or processing power.
+	Scaling Out - This involves adding more nodes to support more users.
+
+Any of the approaches can be used for scaling up/out a application, however the cost of adding resources (per user) may change as the volume increases. If we add resources to the system It should increase the ability of application to take more load in a proportional manner of added resources.  
+An ideal application should be able to serve high level of load in less resources. However, in practical, linearly scalable system may be the best option achievable. Poorly designed applications may have really high cost on scaling up/out since it will require more resources/user as the load increases.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+What do you mean by lower latency interaction?
+
+Low latency means that there is very little delay between the time you request something and the time you get a response. As it applies to webSockets, it just means that data can be sent quicker (particularly over slow links) because the connection has already been established so no extra packet roundtrips are required to establish the TCP connection.
+ 
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+What does the expression “Fail Early” mean, and when would you want to do so?
+
+Essentially, fail fast  (a.k.a. fail early) is to code your software such that, when there is a problem, the software fails as soon as and as visibly as possible, rather than trying to proceed in a possibly unstable state.
+Fail Fast approach won’t reduce the overall number of bugs, at least not at first, but it’ll make most defects much easier to find.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Why do you need clustering?
+
+Clusterin  is needed for achieving high availability for a server software. The main purpose of clustering is to achieve 100% availability or a zero down time in service. A typical server software can be running on one computer machine and it can serve as long as there is no hardware failure or some other failure. By creating a cluster of more than one machine, we can reduce the chances of our service going un-available in case one of the machine fails.  
+Doing clustering does not always guarantee that service will be 100% available since there can still be a chance that all the machine in a cluster fail at the same time. However it in not very likely in case you have many machines and they are located at different location or supported by their own resources.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+What do you mean by high availability?
+
+Availability  means the ability of the application user to access the system, If a user cannot access the application, it is assumed unavailable. High Availability means the application will be available, without interruption. Using redundant server nodes with clustering is a common way to achieve higher level of availability in web applications. 
+Availability is commonly expressed as a percentage of uptime in a given year.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+What Is Sticky Session Load Balancing? What Do You Mean By "Session Affinity"?
+
+Sticky session or a session affinity technique is another popular load balancing technique that requires a user session to be always served by an allocated machine.  
+In a load balanced server application where user information is stored in session it will be required to keep the session data available to all machines. This can be avoided by always serving a particular user session request from one machine. The machine is associated with a session as soon as the session is created. All the requests in a particular session are always redirected to the associated machine. This ensures the user data is only at one machine and load is also shared.  
+This is typically done by using SessionId cookie. The cookie is sent to the client for the first request and every subsequent request by client must be containing that same cookie to identify the session.  
+There are few issues that you may face with this approach:
+	The client browser may not support cookies, and your load balancer will not be able to identify if a request belongs to a session. This may cause strange behavior for the users who use no cookie based browsers.
+	In case one of the machine fails or goes down, the user information (served by that machine) will be lost and there will be no way to recover user session.
+	
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+What does it mean "System Shall Be Resilient"?
+
+System is Resilient  if it stays responsive in the face of failure. This applies not only to highly-available, mission critical systems — any system that is not resilient will be unresponsive after a failure.
+Resilience is achieved by:
+	replication, 
+	containment, 
+	isolation and 
+	delegation. 
+	
+Failures are contained within each component, isolating components from each other and thereby ensuring that parts of the system can fail and recover without compromising the system as a whole. Recovery of each component is delegated to another (external) component and high-availability is ensured by replication where necessary. The client of a component is not burdened with handling its failures.
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+What is Elasticity (in contrast to Scalability)?
+
+Elasticity means that the throughput of a system scales up or down automatically to meet varying demand as resource is proportionally added or removed. The system needs to be scalable to allow it to benefit from the dynamic addition, or removal, of resources at runtime. Elasticity therefore builds upon scalability and expands on it by adding the notion of automatic resource management.
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+What is Starvation?
+
+What Does Eventually Consistent Mean?
+
+What Does Eventually Consistent Mean?
+
+What Is Shared Nothing Architecture? How Does It Scale?
+
+What are heuristic exceptions?
+
+What does Amdahl's Law mean?
+
+What is the difference between Cohesion and Coupling?
+
+What is the most accepted transaction strategy for microservices?

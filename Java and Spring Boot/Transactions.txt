@@ -1,0 +1,60 @@
+Can you give an example for ReadOnly as true in Transaction management?
+
+Example for ReadOnly as TRUE in transaction management could be as follows:
+
+Consider a scenario, where you have to read data from the database. For example, let us say you have a customer database,
+and you want to read the customer details such as customerID, and customername. To do that, you will set read-only on the
+transaction as we do not want to check for the changes in the entities.
+--------------------------------------------------------------------------------------------------------------------------------------------
+In which layer, should the boundary of a transaction start?
+
+The boundary of the transaction should start from the Service Layer since the logic for the business transaction is
+present in this layer itself.
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+What is the transaction?
+	
+	A transaction is a unit of work performed within a database management system (DBMS) or an application that involves one or more operations,
+	such as reading, writing, or modifying data. Transactions ensure that database operations are executed reliably and consistently, even in
+	the presence of failures or concurrent access by multiple users.
+	In the context of database systems, a transaction typically adheres to the ACID properties:
+		Atomicity: A transaction is atomic, meaning that it is an all-or-nothing operation. Either all of the operations within the transaction are
+			successfully completed, or none of them are. If any part of the transaction fails, the entire transaction is rolled back, and the database
+			is left in its original state.
+		Consistency: Transactions ensure that the database remains in a consistent state before and after the transaction. This means that the database
+			constraints, such as integrity constraints and foreign key relationships, are maintained throughout the transaction.
+		Isolation: Transactions are isolated from each other to prevent interference or contention. This means that the intermediate states of one
+			transaction are not visible to other concurrent transactions until the transaction is committed.
+		Durability: Once a transaction is committed, its effects are permanent and persistent, even in the event of a system failure. The changes made
+			by the transaction are stored in non-volatile storage (e.g., disk) and are not lost.
+	In the context of application development, a transaction often involves multiple steps or operations that must be executed together as a single logical unit. For example, transferring funds between bank accounts involves debiting one account and crediting another. These operations should be executed as a single transaction to ensure data integrity and consistency.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+Transaction isolation and transaction propagation:
+
+	In Spring Boot, the isolation and propagation attributes of the @Transactional annotation allow you to control the behavior of transactions at a more granular level. Here's what each attribute does:
+
+	Isolation:
+		Specifies the isolation level for the transaction, which determines how the transaction interacts with concurrent transactions accessing the same data.
+		The isolation level defines the degree to which the changes made by one transaction are visible to other transactions running concurrently.
+		The following isolation levels are available in Spring Boot:
+			DEFAULT: The default isolation level of the underlying database.
+			READ_UNCOMMITTED: Allows a transaction to read data that has been modified by other transactions but not yet committed. This level offers the lowest isolation and the highest concurrency.
+			READ_COMMITTED: Ensures that a transaction can only read data that has been committed by other transactions. It prevents dirty reads but allows non-repeatable reads and phantom reads.
+			REPEATABLE_READ: Prevents non-repeatable reads by ensuring that a transaction sees a consistent snapshot of the data throughout its duration. However, phantom reads are still possible.
+			SERIALIZABLE: Provides the highest level of isolation by ensuring that transactions are completely isolated from each other.
+				It prevents dirty reads, non-repeatable reads, and phantom reads, but it can also reduce concurrency and increase contention.
+				
+	Propagation:
+		Specifies how the transaction should behave in the context of an existing transaction when the annotated method is invoked.
+		This attribute determines whether the method should run within an existing transaction, create a new transaction if none exists, or execute without a transaction.
+		The following propagation options are available:
+			REQUIRED: If a transaction exists, the method joins the existing transaction. Otherwise, a new transaction is created. - default value
+			REQUIRES_NEW: A new transaction is always created, and the method runs independently of any existing transactions.
+			SUPPORTS: The method can run within an existing transaction but doesn't require one. If no transaction exists, the method runs without a transaction.
+			MANDATORY: Requires that an existing transaction is present. If no transaction exists, an exception is thrown.
+			NEVER: The method must execute without a transaction. If a transaction exists, an exception is thrown.
+			NOT_SUPPORTED: The method executes without a transaction. If a transaction exists, it's suspended for the duration of the method execution.
+			NESTED: A new transaction is created, nested within the scope of the existing transaction. This is similar to REQUIRED, but the nested transaction can be rolled back independently of the outer transaction.
+			
+	By carefully choosing the appropriate isolation and propagation levels, you can ensure data consistency, concurrency, and transaction behavior that aligns with your application's requirements.

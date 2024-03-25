@@ -1,0 +1,10 @@
+If I have object of instance BankModel, BankModel has fields id, name, and address. If I clone the object and in clone, I update the value for the address, what happens with the original object
+
+	If you clone an object of type BankModel and modify the address in the cloned object, the original object will remain unchanged. This is because cloning creates a new instance of the object, independent of the original.
+
+	Here's what happens step by step:
+	You have an original BankModel object with its fields id, name, and address.
+	You clone the original object, creating a new instance with the same field values.
+	You modify the address field in the cloned object.
+	The original object remains unaffected by the changes made to the cloned object. It still holds the original values of its fields, including the address.
+	In summary, cloning creates a separate copy of the object, so changes made to the cloned object do not affect the original object, and vice versa. This behavior ensures that each object maintains its own state independently.
