@@ -1,0 +1,39 @@
+What will happen if we have HashMap and key is an object which hashCode function returns 1 for every object?
+
+    If the hashCode function of every object returns the same value (in this case, 1), it means that all the keys will map to the same bucket in the HashMap.
+    This scenario will essentially lead to a degenerated hash table, where all entries are stored in a single bucket.
+        Performance Degradation: The performance of the HashMap will degrade significantly because the time complexity of operations like get() and put() will
+            degrade from O(1) to O(n), where n is the number of entries in the map.
+        Increased Collisions: Since all keys will hash to the same value, it will result in a high collision rate. As a result, the HashMap will resort to using
+            a linked list (or a tree in Java 8 and later versions) to handle collisions, leading to slower performance.
+        Inefficient Retrieval: Retrieving elements from the map will be less efficient because, in the worst case, it will have to traverse all elements in the
+            bucket where all entries are stored.
+        Unbalanced Distribution: The hash table will become unbalanced, defeating the purpose of using a hash-based data structure for efficient lookup and retrieval.
+
+    To avoid such issues, it's crucial to ensure that the hashCode function of objects generates hash codes that distribute keys evenly across the buckets of the hash table, minimizing collisions and maintaining efficient performance.
+
+    HashCode is used for the performance reason, if it is the same, the performances of the Map will not be good.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+If hashCode is implemented well and equals is implemented as we expected. Why we need to have both of methods if we want that our HashMap works as expected
+
+    In Java, both hashCode() and equals() methods serve different purposes, and both are necessary for certain operations and behaviors of objects,
+    especially when used in data structures like HashMap. Here's why we need both methods:
+
+    hashCode() Method:
+        The hashCode() method returns an integer hash code value for an object. This value is used by hash-based data structures, such as HashMap,
+            HashSet, and Hashtable, to determine the bucket where an object should be stored.
+        The primary purpose of hashCode() is to distribute objects evenly across the buckets of a hash table, minimizing collisions and ensuring
+            efficient storage and retrieval.
+
+    equals() Method:
+        The equals() method determines whether two objects are logically equal. It compares the content or state of objects to determine equality.
+        The equals() method is used to identify whether two objects are equal or not in terms of their content. It's typically overridden to provide
+            custom equality semantics specific to the class.
+        For hash-based collections like HashMap, equals() is used to find the correct key-value pair when retrieving or removing elements. It's crucial
+            for ensuring correctness in operations involving key comparisons.
+
+    In summary, hashCode() is used for efficient storage and retrieval in hash-based collections, while equals() is used for determining logical equality
+    between objects. Both methods work together to ensure that hash-based data structures behave as expected, providing efficient storage and accurate comparisons.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------

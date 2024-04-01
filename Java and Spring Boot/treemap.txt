@@ -1,0 +1,10 @@
+Why do we use treemap
+
+TreeMap is used in scenarios where you need to maintain a sorted order of keys. Here are some reasons why you might choose to use a TreeMap:
+    Ordered Keys: TreeMap maintains the keys in sorted order. This can be useful when you need to iterate over the keys in a specific order,
+        such as ascending or descending order.
+    Efficient Searching: TreeMap uses a Red-Black Tree data structure internally, which provides efficient searching, insertion, and deletion
+        operations. The time complexity for these operations is O(log n), making TreeMap suitable for scenarios where you need to perform frequent
+        search operations.
+    Navigable Operations: TreeMap provides navigable operations such as ceilingKey, floorKey, higherKey, and lowerKey, which can be helpful
+        when you need to find keys that are greater than or less than a given key.

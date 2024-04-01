@@ -1,0 +1,21 @@
+HTTP keep-alive is a feature of the HTTP protocol that allows a single TCP connection to remain open for multiple HTTP requests and responses,
+instead of establishing a new connection for each request-response cycle. Here's why HTTP keep-alive is used and its benefits:
+    Reduced latency: By keeping the TCP connection open between the client and the server, HTTP keep-alive reduces the overhead of establishing
+        and tearing down connections for each request. This helps to reduce latency and improve the overall responsiveness of web applications,
+        especially for protocols like HTTP/1.1 where connection setup can be relatively expensive.
+    Improved performance: With HTTP keep-alive, subsequent requests from the same client can be sent over the existing TCP connection without the
+        need to renegotiate connection parameters or perform additional handshakes. This results in faster data transmission and improved performance,
+        particularly for applications that require multiple resource requests to render a webpage (e.g., fetching HTML, CSS, JavaScript, images, etc.).
+    Resource optimization: Keeping TCP connections alive reduces the number of connections that need to be established and maintained by both the client
+        and the server. This helps to conserve network and server resources, such as memory and CPU, as fewer connections need to be managed concurrently.
+    Support for pipelining: HTTP keep-alive enables HTTP pipelining, a technique where multiple HTTP requests are sent over the same connection without
+        waiting for responses. This can further improve performance by allowing the server to process requests in parallel and send back responses as
+        soon as they are available, rather than waiting for each request to complete before sending the next one.
+
+Compatibility with modern web applications: Many modern web applications use techniques like AJAX (Asynchronous JavaScript and XML) to fetch data
+dynamically and update parts of a webpage without reloading the entire page. HTTP keep-alive ensures that these asynchronous requests can be
+efficiently handled over persistent connections, providing a smoother user experience.
+
+Overall, HTTP keep-alive is used to optimize the performance and efficiency of web communication by reducing latency, improving resource utilization,
+and supporting modern web application architectures. It is a fundamental feature of the HTTP protocol and is widely supported by web servers, browsers,
+and networking infrastructure.

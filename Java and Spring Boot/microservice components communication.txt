@@ -1,0 +1,9 @@
+how two microservice components can communicate
+
+    Message broker:
+        Pros:
+        Cons:
+
+    Http request:
+        Pros:
+        Cons:

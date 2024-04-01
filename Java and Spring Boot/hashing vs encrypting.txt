@@ -1,0 +1,72 @@
+what is the difference between hashing and encrypting?
+
+    Hashing and encrypting are both cryptographic techniques used to protect data, but they serve different purposes and have different characteristics:
+
+    Hashing:
+        One-way Function: Hashing is a one-way function, meaning it cannot be reversed to obtain the original input from the hash value.
+        Fixed Output Size: Hash functions produce a fixed-size output regardless of the size of the input.
+        Integrity Verification: Hashing is commonly used for data integrity verification. By comparing hash values of the original and received data, one can determine whether the data has been altered.
+        No Key Required: Hashing does not require a key. It operates solely on the input data.
+        Examples: Common hashing algorithms include MD5, SHA-1, and SHA-256.
+
+    Encrypting:
+        Reversible Transformation: Encryption is a reversible transformation, meaning it can be decrypted using a key to obtain the original input from the ciphertext.
+        Variable Output Size: The size of the encrypted output can vary depending on the size of the input and the encryption algorithm used.
+        Confidentiality: Encryption is primarily used for ensuring confidentiality by transforming plaintext into ciphertext, which can only be decrypted by authorized parties possessing the decryption key.
+        Requires Key: Encryption requires a key to perform both encryption and decryption. The same key is typically used for both operations in symmetric encryption, while different keys are used for encryption and decryption in asymmetric encryption.
+        Examples: Common encryption algorithms include AES (Advanced Encryption Standard), RSA, and DES (Data Encryption Standard).
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Is JWT encrypted or hashed?
+
+    JWT (JSON Web Token) is neither encrypted nor hashed by default, but it can be encrypted or signed using cryptographic algorithms for security purposes:
+
+    Signing:
+        JWTs are commonly signed using digital signatures to ensure data integrity and authenticity.
+        Signing involves using a secret key or a private key to generate a signature for the token. This signature is included in the JWT.
+        The signature can be verified by the recipient using the corresponding public key or secret key to ensure that the token has not been tampered with.
+    Encryption:
+        While JWTs are not encrypted by default, they can be encrypted if confidentiality of the token payload is required.
+        Encrypting a JWT involves transforming the token's payload into ciphertext using an encryption algorithm and a secret key. The ciphertext is then included in the JWT.
+        The recipient decrypts the ciphertext using the corresponding decryption key to obtain the original plaintext payload.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Explain JWT verification. 
+
+    When a JWT is signed using an algorithm like HMAC, RSA, or ECDSA, the signature ensures the integrity of the JWT and allows the recipient to verify that it hasn't been tampered with.
+    However, the signature itself does not encrypt the contents of the JWT; it only provides a means of verification.
+
+    Here's how JWT verification typically works:
+
+        Decode the JWT: The first step is to decode the JWT to extract its header, payload, and signature. JWTs are base64url encoded and consist of three parts separated by periods: the header, the payload, and the signature.
+        Verify the Signature: Depending on the algorithm specified in the JWT header (e.g., HMAC, RSA), the recipient uses the corresponding method to verify the signature.
+            For example:
+                - If HMAC is used, the recipient recalculates the HMAC using the shared secret key and compares it to the signature in the JWT.
+                - If RSA or ECDSA is used, the recipient uses the public key associated with the issuer (or retrieved from a trusted source) to verify the signature.
+        Check the Claims: Once the signature is verified, the recipient can extract and use the claims (data) from the payload of the JWT.
+            These claims are typically in JSON format and can include information such as user identity, permissions, and expiry time.
+        
+    In summary, the JWT itself is not hashed or encrypted as a whole. Instead, it is signed to ensure integrity and authenticity. The signature allows the
+    recipient to verify that the JWT hasn't been tampered with and to trust the claims contained within it. If confidentiality is also required, the
+    payload can be encrypted separately before being included in the JWT.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Do we have one way encrypting algorithms? What does this mean?
+
+    Yes, one-way encryption algorithms, also known as hash functions, are cryptographic algorithms that transform input data (plaintext) into a fixed-size
+    string of characters, called a hash value or hash code. The key characteristic of one-way encryption algorithms is that they are designed to be computationally
+    infeasible to reverse or "decrypt" the hash value to obtain the original plaintext.
+
+    Here are some key features of one-way encryption algorithms:
+        Irreversibility: Given a hash value, it should be computationally infeasible to determine the original input data that produced the hash.
+            This means that you cannot obtain the original data from the hash value alone.
+        Deterministic: The same input data will always produce the same hash value. This property ensures that hash values can be reliably used for
+            data integrity verification and password hashing.
+        Fixed Output Size: Regardless of the size of the input data, the hash function produces a hash value of fixed size. For example, the SHA-256
+            algorithm always produces a 256-bit (32-byte) hash value.
+        Collision Resistance: A good hash function should minimize the probability of two different inputs producing the same hash value (collision).
+
+    One-way encryption algorithms are commonly used for various security purposes, including password hashing, digital signatures, data integrity verification,
+    and message authentication codes (MACs). Examples of widely used one-way encryption algorithms include SHA-256, SHA-512, MD5, and bcrypt.

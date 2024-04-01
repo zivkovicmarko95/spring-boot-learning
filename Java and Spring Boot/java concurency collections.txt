@@ -1,0 +1,65 @@
+Java concurrency collections provide thread-safe implementations of various data structures that are commonly used in concurrent programming.
+These collections are designed to be used in multi-threaded environments where multiple threads may access and modify the collections concurrently.
+Java concurrency collections offer atomic operations and synchronization mechanisms to ensure thread safety and consistency.
+
+Here are some commonly used Java concurrency collections:
+
+    ConcurrentHashMap: ConcurrentHashMap is a thread-safe implementation of the Map interface. It allows concurrent access and modification by multiple
+        threads without the need for external synchronization. It achieves thread safety by dividing the map into segments, and different threads can
+        access different segments concurrently.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Here's an example demonstrating the usage of ConcurrentHashMap:
+
+import java.util.concurrent.ConcurrentHashMap;
+
+public class ConcurrentHashMapExample {
+    public static void main(String[] args) {
+        // Create a ConcurrentHashMap with Integer keys and String values
+        ConcurrentHashMap<Integer, String> map = new ConcurrentHashMap<>();
+
+        // Add elements to the ConcurrentHashMap
+        map.put(1, "Apple");
+        map.put(2, "Banana");
+        map.put(3, "Orange");
+
+        // Retrieve and print the elements
+        System.out.println("Initial ConcurrentHashMap: " + map);
+
+        // Modify an element concurrently
+        Runnable task = () -> {
+            map.put(4, "Grapes"); // Concurrently modify the map
+            System.out.println("Modified ConcurrentHashMap: " + map);
+        };
+
+        // Create multiple threads to modify the map concurrently
+        Thread thread1 = new Thread(task);
+        Thread thread2 = new Thread(task);
+        thread1.start();
+        thread2.start();
+
+        // Wait for threads to finish
+        try {
+            thread1.join();
+            thread2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Print the final state of the ConcurrentHashMap
+        System.out.println("Final ConcurrentHashMap: " + map);
+    }
+}
+
+In this example:
+    We create a ConcurrentHashMap instance called map with Integer keys and String values.
+    We add some elements to the map using the put() method.
+    We print the initial state of the map.
+    We define a Runnable task that modifies the map by adding a new entry (4, "Grapes").
+    We create two threads (thread1 and thread2) that concurrently execute the task.
+    We start the threads and wait for them to finish using the join() method.
+    After the threads finish execution, we print the final state of the map to observe the concurrent modifications.
+
+ConcurrentHashMap provides thread-safe concurrent access to its elements, allowing multiple threads to read and modify the map concurrently
+without the need for external synchronization.
