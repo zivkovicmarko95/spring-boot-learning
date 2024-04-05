@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+
+  spring-redis-open-api:
+    container_name: spring-redis-open-api
+    build: .
+    restart: always
+    environment:
+      REDIS_HOST: redis_db
+      REDIS_PORT: 6379
+    ports:
+      - 8080:8080
+    depends_on:
+      - redis
+
+  redis_db:
+    container_name: redis_db
+    image: redis:7.2.4
+    restart: always
+    ports:
+      - '6379:6379'
+    volumes: 
+      - redis_volume:/data
+
+volumes:
+  redis_volume:
+    driver: local
