@@ -1,0 +1,24 @@
+type: object
+required:
+  - message
+properties:
+  timeStamp:
+    type: string
+    readOnly: true
+    description: "Time when the response was sent."
+  httpStatusCode:
+    type: integer
+    readOnly: true
+    description: "Status code of the response."
+  httpStatus:
+    type: string
+    readOnly: true
+    description: "Meaning of the HTTP status code."
+  reason:
+    type: string
+    readOnly: true
+    description: "The description detailing the reason of the error code."
+  message:
+    type: string
+    readOnly: true
+    description: "The description detailing the cause of the error code."
