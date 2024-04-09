@@ -1,0 +1,264 @@
+openapi: 3.0.0
+
+info:
+  title: Financial Hierarchy API
+  version: 0.0.1
+
+servers:
+  - url: http://localhost:8080/
+
+tags:
+  - name: "Configuration"
+
+paths:
+
+  /configurations:
+
+    post:
+      summary: Apply new configuration.
+      tags:
+        - "Configuration"
+      description: Apply new configuration.
+      operationId: configurationsPost
+      requestBody:
+        required: true
+        description: Request changing the configuration.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateConfiguration'
+      responses:
+        '202':
+          description: Configuration of the application has been updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/Configuration'
+        '400':
+          $ref: './common/responses/BadRequest.yaml'
+        '401':
+          $ref: './common/responses/Unauthorized.yaml'
+        '403':
+          $ref: './common/responses/Forbidden.yaml'
+        '500':
+          $ref: './common/responses/InternalServerError.yaml'
+
+    get:
+      summary: Get the configuration.
+      tags:
+        - "Configuration"
+      description: Get the configuration.
+      operationId: configurationsGet
+      responses:
+        '200':
+          description: Found applied application configuration.
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/Configuration'
+        # '400':
+        #   $ref: './common/responses/BadRequest.yaml'
+        # '401':
+        #   $ref: './common/responses/Unauthorized.yaml'
+        # '403':
+        #   $ref: './common/responses/Forbidden.yaml'
+        # '500':
+        #   $ref: './common/responses/InternalServerError.yaml'
+
+  # /fiscal-years:
+    
+  #   get:
+  #     summary: Get the list of all fiscal years.
+  #     tags:
+  #       - "Fiscal Year"
+  #     description: Get the list of all fiscal years.
+  #     operationId: fiscalYearsGet
+  #     responses:
+  #       '200':
+  #         description: List of all fiscal years.
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: '#/components/schemas/FiscalYear'
+  #       '400':
+  #         $ref: './common/responses/BadRequest.yaml'
+  #       '401':
+  #         $ref: './common/responses/Unauthorized.yaml'
+  #       '403':
+  #         $ref: './common/responses/Forbidden.yaml'
+  #       '500':
+  #         $ref: './common/responses/InternalServerError.yaml'
+
+  # /fiscal-years/{fiscalYearId}:
+  #   parameters:
+  #     - $ref: './common/parameters/fiscal-year-params.yaml#/fiscalYearId'
+    
+  #   get:
+  #     summary: Get the fiscal year by provided fiscal year ID.
+  #     tags:
+  #       - "Fiscal Year"
+  #     description: Get the fiscal year by provided fiscal year ID.
+  #     operationId: fiscalYearsFiscalYearIdGet
+  #     responses:
+  #       '200':
+  #         description: Found fiscal year.
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               $ref: '#/components/schemas/FiscalYear'
+  #       '400':
+  #         $ref: './common/responses/BadRequest.yaml'
+  #       '401':
+  #         $ref: './common/responses/Unauthorized.yaml'
+  #       '403':
+  #         $ref: './common/responses/Forbidden.yaml'
+  #       '500':
+  #         $ref: './common/responses/InternalServerError.yaml'
+
+  # /node-types:
+
+  #   get:
+  #     summary: Get the list of all node types.
+  #     tags:
+  #       - "Node Type"
+  #     description: Get the list of all node types.
+  #     operationId: nodeTypesGet
+  #     responses:
+  #       '200':
+  #         description: List of all node types.
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: '#/components/schemas/NodeType'
+  #       '400':
+  #         $ref: './common/responses/BadRequest.yaml'
+  #       '401':
+  #         $ref: './common/responses/Unauthorized.yaml'
+  #       '403':
+  #         $ref: './common/responses/Forbidden.yaml'
+  #       '500':
+  #         $ref: './common/responses/InternalServerError.yaml'
+
+  # /node-types/{nodeTypeId}:
+  #   parameters:
+  #     - $ref: './common/parameters/node-type-params.yaml#/nodeTypeId'
+    
+  #   get:
+  #     summary: Get the node type by provided node type ID.
+  #     tags:
+  #       - "Node Type"
+  #     description: Get the node type by provided node type ID.
+  #     operationId: nodeTypesNodeTypeIdGet
+  #     responses:
+  #       '200':
+  #         description: Found node type.
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               $ref: '#/components/schemas/NodeType'
+  #       '400':
+  #         $ref: './common/responses/BadRequest.yaml'
+  #       '401':
+  #         $ref: './common/responses/Unauthorized.yaml'
+  #       '403':
+  #         $ref: './common/responses/Forbidden.yaml'
+  #       '500':
+  #         $ref: './common/responses/InternalServerError.yaml'
+
+  # /nodes:
+  #   parameters:
+  #     - $ref: './common/parameters/financial-hierarchy-params.yaml#/name'
+  #     - $ref: './common/parameters/financial-hierarchy-params.yaml#/parentName'
+  #     - $ref: './common/parameters/financial-hierarchy-params.yaml#/parentId'
+  #     - $ref: './common/parameters/financial-hierarchy-params.yaml#/brand'
+  #     - $ref: './common/parameters/financial-hierarchy-params.yaml#/hierarchy'
+  #     - $ref: './common/parameters/financial-hierarchy-params.yaml#/affiliate'
+  #     - $ref: './common/parameters/financial-hierarchy-params.yaml#/type'
+
+  #   get:
+  #     summary: Get the list of all nodes.
+  #     tags:
+  #       - "Node"
+  #     description: Get the list of all nodes.
+  #     operationId: nodeTypesGet
+  #     responses:
+  #       '200':
+  #         description: List of all nodes.
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: '#/components/schemas/Node'
+  #       '400':
+  #         $ref: './common/responses/BadRequest.yaml'
+  #       '401':
+  #         $ref: './common/responses/Unauthorized.yaml'
+  #       '403':
+  #         $ref: './common/responses/Forbidden.yaml'
+  #       '500':
+  #         $ref: './common/responses/InternalServerError.yaml'
+
+  # /nodes/{nodeId}:
+  #   parameters:
+  #     - $ref: './common/parameters/node-params.yaml#/nodeId'
+    
+  #   get:
+  #     summary: Get the node by provided node ID.
+  #     tags:
+  #       - "Node"
+  #     description: Get the node by provided node ID.
+  #     operationId: nodesNodeIdGet
+  #     responses:
+  #       '200':
+  #         description: Found node.
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               $ref: '#/components/schemas/Node'
+  #       '400':
+  #         $ref: './common/responses/BadRequest.yaml'
+  #       '401':
+  #         $ref: './common/responses/Unauthorized.yaml'
+  #       '403':
+  #         $ref: './common/responses/Forbidden.yaml'
+  #       '500':
+  #         $ref: './common/responses/InternalServerError.yaml'
+
+components:
+  schemas:
+
+    CreateConfiguration:
+      description: Create configuration model.
+      type: object
+      properties:
+        cronExpression:
+          description: Cron expression.
+          type: string
+        skipNodes:
+          description: Skip nodes configuration.
+          type: array
+          items:
+            type: string
+
+    Configuration:
+      description: Configuration model.
+      type: object
+      properties:
+        cronExpression:
+          description: Cron expression.
+          type: string
+        skipNodes:
+          description: Skip nodes configuration.
+          type: array
+          items:
+            type: string

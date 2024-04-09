@@ -1,0 +1,64 @@
+# Query params
+
+name:
+  in: query
+  name: name
+  description: Name of the resource
+  required: false
+  schema:
+    type: string
+  example: test
+
+parentName:
+  in: query
+  name: parent-name
+  description: Parent name of the resource
+  required: false
+  schema:
+    type: string
+  example: Parent
+
+parentId:
+  in: query
+  name: parent-id
+  description: Parent ID of the resource
+  required: false
+  schema:
+    type: integer
+  example: 1133
+
+brand:
+  in: query
+  name: brand
+  description: Brand name of the resource
+  required: false
+  schema:
+    type: string
+  example: Brand
+
+hierarchy:
+  in: query
+  name: hierarchy
+  description: Hierarchy name of the resource
+  required: false
+  schema:
+    type: string
+  example: Hierarchy
+
+affiliate:
+  in: query
+  name: affiliate
+  description: Affiliate name of the resource
+  required: false
+  schema:
+    type: string
+  example: Affiliate
+
+type:
+  in: query
+  name: type
+  description: Type of the resource
+  required: false
+  schema:
+    type: string
+  example: Type
