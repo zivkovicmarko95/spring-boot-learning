@@ -95,15 +95,11 @@
 									<library>spring-boot</library>
 									<output>${project.basedir}</output>
 									<configOptions>
-										<!-- <basePackage>com.example.springredisopenapi.generated</basePackage>
-                    					<invokerPackage>com.example.springredisopenapi.generated</invokerPackage>
-										<configPackage>com.example.springredisopenapi.generated.config</configPackage> -->
+										<configPackage>com.example.springredisopenapi.generated.config</configPackage>
 										<apiPackage>com.example.springredisopenapi.generated</apiPackage>
 										<modelPackage>com.example.springredisopenapi.generated.model</modelPackage>
 										<hideGenerationTimestamp>true</hideGenerationTimestamp>
 										<interfaceOnly>true</interfaceOnly>
-                                        <!-- <generateApiTests>false</generateApiTests> -->
-                                        <!-- <generateApiDocumentation>false</generateApiDocumentation> -->
 										<useSpringBoot3>true</useSpringBoot3>
 									</configOptions>
 								</configuration>
