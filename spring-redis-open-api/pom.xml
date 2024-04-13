@@ -102,7 +102,7 @@
 										<basePackage>com.example.springredisopenapi.generated</basePackage>
                     					<invokerPackage>com.example.springredisopenapi.generated</invokerPackage>
 										<configPackage>com.example.springredisopenapi.generated.config</configPackage>
-										<apiPackage>com.example.springredisopenapi.springredisopenapi.generated</apiPackage>
+										<apiPackage>com.example.springredisopenapi.generated</apiPackage>
 										<modelPackage>com.example.springredisopenapi.generated.model</modelPackage>
 										<hideGenerationTimestamp>true</hideGenerationTimestamp>
 										<interfaceOnly>true</interfaceOnly>
