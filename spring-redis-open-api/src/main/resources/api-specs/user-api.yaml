@@ -154,6 +154,10 @@ components:
     CreateUser:
       description: Create user model.
       type: object
+      required:
+        - "name"
+        - "email"
+        - "gender"
       properties:
         name:
           description: Name of the user.
@@ -161,6 +165,7 @@ components:
         email:
           description: Email of the user.
           type: string
+          format: email
         gender:
           description: Gender of the user
           type: string
@@ -173,6 +178,10 @@ components:
     ModifyUser:
       description: Modify user model.
       type: object
+      required:
+        - "name"
+        - "email"
+        - "gender"
       properties:
         name:
           description: Name of the user.
@@ -180,6 +189,7 @@ components:
         email:
           description: Email of the user.
           type: string
+          format: email
         gender:
           description: Gender of the user
           type: string

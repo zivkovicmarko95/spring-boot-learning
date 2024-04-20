@@ -34,6 +34,19 @@ public class CreateUser {
   @Valid
   private List<String> groupIds;
 
+  public CreateUser() {
+    super();
+  }
+
+  /**
+   * Constructor with only required parameters
+   */
+  public CreateUser(String name, String email, String gender) {
+    this.name = name;
+    this.email = email;
+    this.gender = gender;
+  }
+
   public CreateUser name(String name) {
     this.name = name;
     return this;
@@ -43,8 +56,8 @@ public class CreateUser {
    * Name of the user.
    * @return name
   */
-  
-  @Schema(name = "name", description = "Name of the user.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @NotNull 
+  @Schema(name = "name", description = "Name of the user.", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -63,8 +76,8 @@ public class CreateUser {
    * Email of the user.
    * @return email
   */
-  
-  @Schema(name = "email", description = "Email of the user.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @NotNull @jakarta.validation.constraints.Email 
+  @Schema(name = "email", description = "Email of the user.", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("email")
   public String getEmail() {
     return email;
@@ -83,8 +96,8 @@ public class CreateUser {
    * Gender of the user
    * @return gender
   */
-  
-  @Schema(name = "gender", description = "Gender of the user", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @NotNull 
+  @Schema(name = "gender", description = "Gender of the user", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("gender")
   public String getGender() {
     return gender;
