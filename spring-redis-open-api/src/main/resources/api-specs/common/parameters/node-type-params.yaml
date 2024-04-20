@@ -1,8 +1,0 @@
-nodeTypeId:
-  in: path
-  name: nodeTypeId
-  description: ID of the node type
-  required: true
-  schema:
-    type: integer
-  example: 4421

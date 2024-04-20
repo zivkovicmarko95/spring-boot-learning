@@ -1,8 +1,0 @@
-fiscalYearId:
-  in: path
-  name: fiscalYearId
-  description: ID of the fiscal year
-  required: true
-  schema:
-    type: integer
-  example: 1223

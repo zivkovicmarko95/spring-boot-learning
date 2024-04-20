@@ -1,0 +1,39 @@
+#Path parameters
+
+userId:
+  in: path
+  name: userId
+  description: ID of the user
+  required: true
+  schema:
+    type: string
+  example: db3e7a64-a803-40c9-9561-80a8a4545f31
+
+# Query params
+
+name:
+  in: query
+  name: name
+  description: Name of the resource
+  required: false
+  schema:
+    type: string
+  example: test
+
+email:
+  in: query
+  name: email
+  description: Email of the resource
+  required: false
+  schema:
+    type: string
+  example: test@gmail.com
+
+gender:
+  in: query
+  name: gender
+  description: Gender of the resource
+  required: false
+  schema:
+    type: string
+  example: MALE
