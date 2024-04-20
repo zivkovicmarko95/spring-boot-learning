@@ -2,7 +2,6 @@ package com.example.springredisopenapi.services;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import com.example.springredisopenapi.enums.GenderEnum;
@@ -34,6 +33,12 @@ public class UserService {
                 ));
     }
 
+    public List<UserModel> getUsers() {
+        
+        return StreamSupport.stream(this.userRepository.findAll().spliterator(), false)
+                .toList();
+    }
+
     public List<UserModel> getByParameters(final String name, final String email, final GenderEnum gender) {
 
         final UserModel userModel = new UserModel().setName(name)
@@ -43,7 +48,7 @@ public class UserService {
         final Iterable<UserModel> userModels = this.userRepository.findAll(Example.of(userModel));
 
         return StreamSupport.stream(userModels.spliterator(),false)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public UserModel saveUser(final String name, final String email, final GenderEnum gender,
