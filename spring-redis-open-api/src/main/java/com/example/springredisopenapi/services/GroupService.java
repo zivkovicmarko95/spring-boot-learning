@@ -24,6 +24,13 @@ public class GroupService {
         this.groupRepository = groupRepository;
     }
 
+    /**
+     * Fetch group by provided ID
+     * 
+     * @param id ID of the group
+     * @return Found {@link GroupModel}
+     * @throws ResourceNotFoundException If not found
+     */
     public GroupModel getById(final String id) {
 
         return this.groupRepository.findById(id)
@@ -32,6 +39,12 @@ public class GroupService {
                 ));
     }
 
+    /**
+     * Get all the groups by provided parameters
+     * 
+     * @param name Name of the group
+     * @return List of found {@link GroupModel}
+     */
     public List<GroupModel> getByParameters(final String name) {
 
         final GroupModel groupModel = new GroupModel().setName(name);
@@ -42,6 +55,12 @@ public class GroupService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Create new group
+     * 
+     * @param name Name of the group
+     * @return Created {@link GroupModel}
+     */
     public GroupModel saveGroup(final String name) {
 
         LOGGER.info("Creating new group with name {}", name);
@@ -51,6 +70,14 @@ public class GroupService {
         );
     }
 
+    /**
+     * Update the group by provided group ID
+     * 
+     * @param id   Id of the group
+     * @param name Name of the group to be updated
+     * @return Updated {@link GroupModel}
+     * @throws ResourceNotFoundException If not found
+     */
     public GroupModel updateById(final String id, final String name) {
 
         final GroupModel groupModel = this.getById(id);
@@ -65,6 +92,11 @@ public class GroupService {
         );
     }
     
+    /**
+     * Delete group by provide group ID
+     * 
+     * @param id ID of the group to be deleted
+     */
     public void deleteById(final String id) {
 
         this.groupRepository.deleteById(id);

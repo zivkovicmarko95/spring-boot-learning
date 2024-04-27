@@ -1,16 +1,15 @@
 package com.example.springredisopenapi.models;
 
-import com.example.springredisopenapi.enums.GenderEnum;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Reference;
-import org.springframework.data.redis.core.RedisHash;
-import org.springframework.data.redis.core.index.Indexed;
-
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+
+import com.example.springredisopenapi.enums.GenderEnum;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.index.Indexed;
 
 @RedisHash("user")
 public class UserModel {
@@ -23,9 +22,10 @@ public class UserModel {
 
     @Indexed
     private String email;
+
+    @Indexed
     private GenderEnum gender;
 
-    @Reference
     private Set<String> groupIds = new HashSet<>();
 
     public UserModel() {

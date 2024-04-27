@@ -25,6 +25,13 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Fetch user by ID
+     * 
+     * @param id ID of the user
+     * @return Found {@link UserModel}
+     * @throws ResourceNotFoundException If not found
+     */
     public UserModel getById(final String id) {
 
         return this.userRepository.findById(id)
@@ -33,12 +40,25 @@ public class UserService {
                 ));
     }
 
+    /**
+     * Find all the users
+     * 
+     * @return List of found {@link UserModel}
+     */
     public List<UserModel> getUsers() {
         
         return StreamSupport.stream(this.userRepository.findAll().spliterator(), false)
                 .toList();
     }
 
+    /**
+     * Find all the users by provided parameters
+     * 
+     * @param name   Name of the user
+     * @param email  Email of the user
+     * @param gender Gender of the user
+     * @return List of found {@link UserModel}
+     */
     public List<UserModel> getByParameters(final String name, final String email, final GenderEnum gender) {
 
         final UserModel userModel = new UserModel().setName(name)
@@ -51,6 +71,15 @@ public class UserService {
                 .toList();
     }
 
+    /**
+     * Save new user
+     * 
+     * @param name     Name of the user
+     * @param email    Email of the user
+     * @param gender   Gender of the user
+     * @param groupIds Group IDs
+     * @return Created new {@link UserModel}
+     */
     public UserModel saveUser(final String name, final String email, final GenderEnum gender,
             final Set<String> groupIds) {
 
@@ -61,6 +90,16 @@ public class UserService {
         );
     }
 
+    /**
+     * Update user by ID with provided parameters
+     * 
+     * @param id     ID of the user
+     * @param name   Name of the user to be updated
+     * @param email  Email of the user to be updated
+     * @param gender Gender of the user to be updated
+     * @return Updated {@link UserModel}
+     * @throws ResourceNotFoundException If not found
+     */
     public UserModel updateById(final String id, final String name, final String email, final GenderEnum gender) {
 
         final UserModel userModel = this.getById(id);
@@ -77,6 +116,11 @@ public class UserService {
         );
     }
     
+    /**
+     * Delete user by provided user ID
+     * 
+     * @param id ID of the user to be deleted
+     */
     public void deleteById(final String id) {
 
         this.userRepository.deleteById(id);
