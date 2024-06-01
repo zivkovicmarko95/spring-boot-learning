@@ -12,6 +12,7 @@ import com.example.springredisopenapi.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Example;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -59,7 +60,8 @@ public class UserService {
      * @param gender Gender of the user
      * @return List of found {@link UserModel}
      */
-    public List<UserModel> getByParameters(final String name, final String email, final GenderEnum gender) {
+    public List<UserModel> getByParameters(@Nullable final String name, @Nullable final String email,
+                                        @Nullable final GenderEnum gender) {
 
         final UserModel userModel = new UserModel().setName(name)
                 .setEmail(email)
