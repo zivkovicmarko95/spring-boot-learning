@@ -2,6 +2,7 @@ package com.example.springredisopenapi.controllers;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.example.springredisopenapi.enums.GenderEnum;
 import com.example.springredisopenapi.generated.UsersApi;
@@ -11,12 +12,15 @@ import com.example.springredisopenapi.generated.model.User;
 import com.example.springredisopenapi.generated.model.UsersGet200Response;
 import com.example.springredisopenapi.mappers.UserMapper;
 import com.example.springredisopenapi.models.UserModel;
+import com.example.springredisopenapi.services.GroupService;
 import com.example.springredisopenapi.services.UserService;
+import com.example.springredisopenapi.utils.GroupUtils;
 import com.example.springredisopenapi.utils.StringUtils;
 
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,10 +31,13 @@ import jakarta.validation.Valid;
 public class UsersController implements UsersApi {
     
     private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
+    
     private final UserService userService;
+    private final GroupService groupService;
 
-    public UsersController(final UserService userService) {
+    public UsersController(final UserService userService, final GroupService groupService) {
         this.userService = userService;
+        this.groupService = groupService;
     }
 
     @Override
@@ -61,13 +68,19 @@ public class UsersController implements UsersApi {
     @Override
     public ResponseEntity<User> usersPost(@Valid final CreateUser createUser) {
         
-        // TODO: Validate groupIDs
+        final Set<String> groupIds = !CollectionUtils.isEmpty(createUser.getGroupIds()) ?
+                new HashSet<>(createUser.getGroupIds()) : 
+                Set.of();
+        
+        if (!groupIds.isEmpty()) {
+            GroupUtils.validateGroupIds(this.groupService.getAllByIds(groupIds), groupIds);
+        }
+        
         return new ResponseEntity<>(
                 this.userMapper.mapUserTOToUser(
                     this.userMapper.mapUserModelToUserTO(
                         this.userService.saveUser(
-                                createUser.getName(), createUser.getEmail(), GenderEnum.valueOf(createUser.getGender()),
-                                new HashSet<>(createUser.getGroupIds())
+                                createUser.getName(), createUser.getEmail(), GenderEnum.valueOf(createUser.getGender()), groupIds
                         )
                     )
                 ),

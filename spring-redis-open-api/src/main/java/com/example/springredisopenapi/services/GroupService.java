@@ -1,6 +1,7 @@
 package com.example.springredisopenapi.services;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -25,11 +26,11 @@ public class GroupService {
     }
 
     /**
-     * Fetch group by provided ID
+     * Fetches a group by the provided ID
      * 
      * @param id ID of the group
      * @return Found {@link GroupModel}
-     * @throws ResourceNotFoundException If not found
+     * @throws ResourceNotFoundException if the group is not found
      */
     public GroupModel getById(final String id) {
 
@@ -40,10 +41,29 @@ public class GroupService {
     }
 
     /**
-     * Get all the groups by provided parameters
+     * Retrieves all {@link GroupModel} entities with the given set of IDs.
      * 
-     * @param name Name of the group
-     * @return List of found {@link GroupModel}
+     * <p>This method fetches all {@link GroupModel} entities corresponding to the provided IDs
+     * in a single database query, and returns them as a List. If no {@link GroupModel} are
+     * found for the given IDs, an empty {@link List} is returned.
+     * 
+     * @param ids the set of IDs for which to retrieve the {@link GroupModel} entities
+     * @return a {@link List} of {@link GroupModel} entities with the given IDs, or an empty
+     *         {@link List} if no entities are found
+     */
+    public List<GroupModel> getAllByIds(final Set<String> ids) {
+
+        final Iterable<GroupModel> groupModels = this.groupRepository.findAllById(ids);
+
+        return StreamSupport.stream(groupModels.spliterator(),false)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Retrieves all groups matching the provided parameters
+     * 
+     * @param name name of the group
+     * @return {@link List} of found {@link GroupModel}
      */
     public List<GroupModel> getByParameters(final String name) {
 
@@ -56,7 +76,7 @@ public class GroupService {
     }
 
     /**
-     * Create new group
+     * Creates a new group with the provided parameters
      * 
      * @param name Name of the group
      * @return Created {@link GroupModel}
@@ -71,12 +91,12 @@ public class GroupService {
     }
 
     /**
-     * Update the group by provided group ID
+     * Updates the group with the provided group ID
      * 
      * @param id   Id of the group
      * @param name Name of the group to be updated
      * @return Updated {@link GroupModel}
-     * @throws ResourceNotFoundException If not found
+     * @throws ResourceNotFoundException if the group is not found
      */
     public GroupModel updateById(final String id, final String name) {
 
@@ -93,7 +113,7 @@ public class GroupService {
     }
     
     /**
-     * Delete group by provide group ID
+     * Deletes the group with the provided group ID
      * 
      * @param id ID of the group to be deleted
      */

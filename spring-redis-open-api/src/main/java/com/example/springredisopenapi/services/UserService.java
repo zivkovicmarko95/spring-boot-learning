@@ -26,11 +26,11 @@ public class UserService {
     }
 
     /**
-     * Fetch user by ID
+     * Fetches a user by the provided ID
      * 
      * @param id ID of the user
      * @return Found {@link UserModel}
-     * @throws ResourceNotFoundException If not found
+     * @throws ResourceNotFoundException if the user is not found
      */
     public UserModel getById(final String id) {
 
@@ -41,7 +41,7 @@ public class UserService {
     }
 
     /**
-     * Find all the users
+     * Finds all the users
      * 
      * @return List of found {@link UserModel}
      */
@@ -52,7 +52,7 @@ public class UserService {
     }
 
     /**
-     * Find all the users by provided parameters
+     * Finds all users matching the provided parameters
      * 
      * @param name   Name of the user
      * @param email  Email of the user
@@ -72,12 +72,12 @@ public class UserService {
     }
 
     /**
-     * Save new user
+     * Saves a new user with the provided parameters
      * 
      * @param name     Name of the user
      * @param email    Email of the user
      * @param gender   Gender of the user
-     * @param groupIds Group IDs
+     * @param groupIds IDs of the groups the user belongs to
      * @return Created new {@link UserModel}
      */
     public UserModel saveUser(final String name, final String email, final GenderEnum gender,
@@ -91,14 +91,14 @@ public class UserService {
     }
 
     /**
-     * Update user by ID with provided parameters
+     * Updates the user with the provided ID and details
      * 
      * @param id     ID of the user
      * @param name   Name of the user to be updated
      * @param email  Email of the user to be updated
      * @param gender Gender of the user to be updated
      * @return Updated {@link UserModel}
-     * @throws ResourceNotFoundException If not found
+     * @throws ResourceNotFoundException if the user is not found
      */
     public UserModel updateById(final String id, final String name, final String email, final GenderEnum gender) {
 
@@ -117,7 +117,7 @@ public class UserService {
     }
     
     /**
-     * Delete user by provided user ID
+     * Deletes the user with the provided ID
      * 
      * @param id ID of the user to be deleted
      */
