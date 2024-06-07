@@ -1,0 +1,223 @@
+openapi: 3.0.0
+
+info:
+  title: Financial Hierarchy API
+  version: 0.0.1
+
+servers:
+  - url: http://localhost:8080/
+
+tags:
+  - name: "User"
+
+paths:
+
+  /users:
+
+    post:
+      summary: Add new user.
+      tags:
+        - "User"
+      description: Add new user.
+      operationId: usersPost
+      requestBody:
+        required: true
+        description: Request creating a new user.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUser'
+      responses:
+        '201':
+          description: User is created.
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: './common/responses/BadRequest.yaml'
+        '401':
+          $ref: './common/responses/Unauthorized.yaml'
+        '403':
+          $ref: './common/responses/Forbidden.yaml'
+        '500':
+          $ref: './common/responses/InternalServerError.yaml'
+
+    get:
+      parameters:
+        - $ref: './common/parameters/user-params.yaml#/name'
+        - $ref: './common/parameters/user-params.yaml#/email'
+        - $ref: './common/parameters/user-params.yaml#/gender'
+      summary: Get all users.
+      tags:
+        - "User"
+      description: Get all users.
+      operationId: usersGet
+      responses:
+        '200':
+          description: Found applied application configuration.
+          content:
+            application/json:
+              schema:
+                properties:
+                  total:
+                    type: integer
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+        '400':
+          $ref: './common/responses/BadRequest.yaml'
+        '401':
+          $ref: './common/responses/Unauthorized.yaml'
+        '403':
+          $ref: './common/responses/Forbidden.yaml'
+        '500':
+          $ref: './common/responses/InternalServerError.yaml'
+
+  /users/{userId}:
+    parameters:
+      - $ref: './common/parameters/user-params.yaml#/userId'
+
+    get:
+      summary: Get the user by user ID.
+      tags:
+        - "User"
+      operationId: usersUserIdGet
+      responses:
+        '200':
+          description: Found user by provided user ID.
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: './common/responses/BadRequest.yaml'
+        '401':
+          $ref: './common/responses/Unauthorized.yaml'
+        '403':
+          $ref: './common/responses/Forbidden.yaml'
+        '500':
+          $ref: './common/responses/InternalServerError.yaml'
+
+    put:
+      summary: Update user by user ID.
+      tags:
+        - "User"
+      operationId: usersUserIdPut
+      requestBody:
+        required: true
+        description: Request modifying user.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModifyUser'
+      responses:
+        '200':
+          description: Found user by provided user ID.
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: './common/responses/BadRequest.yaml'
+        '401':
+          $ref: './common/responses/Unauthorized.yaml'
+        '403':
+          $ref: './common/responses/Forbidden.yaml'
+        '500':
+          $ref: './common/responses/InternalServerError.yaml'
+
+    delete:
+      summary: Delete the user by user ID.
+      tags:
+        - "User"
+      operationId: usersUserIdDelete
+      responses:
+        '204':
+          description: Deleted user by provided user ID.
+        '400':
+          $ref: './common/responses/BadRequest.yaml'
+        '401':
+          $ref: './common/responses/Unauthorized.yaml'
+        '403':
+          $ref: './common/responses/Forbidden.yaml'
+        '500':
+          $ref: './common/responses/InternalServerError.yaml'
+
+  # TODO: Add endpoints for assigning and removing groups
+  # Endpoint path for adding:
+  # POST: /users/{userId}/groups
+  # Endpoint path for removing:
+  # DELETE: /users/{userId}/groups/{groupId}
+
+components:
+  schemas:
+
+    CreateUser:
+      description: Create user model.
+      type: object
+      required:
+        - "name"
+        - "email"
+        - "gender"
+      properties:
+        name:
+          description: Name of the user.
+          type: string
+        email:
+          description: Email of the user.
+          type: string
+          format: email
+        gender:
+          description: Gender of the user
+          type: string
+        groupIds:
+          description: IDs of the groups
+          type: array
+          items:
+            type: string
+
+    ModifyUser:
+      description: Modify user model.
+      type: object
+      required:
+        - "name"
+        - "email"
+        - "gender"
+      properties:
+        name:
+          description: Name of the user.
+          type: string
+        email:
+          description: Email of the user.
+          type: string
+          format: email
+        gender:
+          description: Gender of the user
+          type: string
+
+    User:
+      description: User model.
+      type: object
+      properties:
+        id:
+          description: ID of the user.
+          type: string
+        name:
+          description: Name of the user.
+          type: string
+        email:
+          description: Email of the user.
+          type: string
+        gender:
+          description: Gender of the user
+          type: string
+        groupIds:
+          description: IDs of the groups
+          type: array
+          items:
+            type: string

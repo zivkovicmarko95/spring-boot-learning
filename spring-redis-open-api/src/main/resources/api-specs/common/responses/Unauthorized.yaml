@@ -1,0 +1,5 @@
+description: "The request failed because you are not authorized."
+content:
+  application/json:
+    schema:
+      $ref: '../schemas/HttpErrorResponse.yaml'

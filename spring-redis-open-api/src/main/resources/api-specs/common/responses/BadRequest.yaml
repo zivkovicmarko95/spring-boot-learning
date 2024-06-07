@@ -1,0 +1,5 @@
+description: "The request failed due to wrong data. Please check the provided parameters and try again."
+content:
+  application/json:
+    schema:
+      $ref: '../schemas/HttpErrorResponse.yaml'

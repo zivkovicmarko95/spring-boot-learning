@@ -1,0 +1,5 @@
+description: "The request failed because of the state of the resource."
+content:
+  application/json:
+    schema:
+      $ref: '../schemas/HttpErrorResponse.yaml'

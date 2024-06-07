@@ -1,0 +1,5 @@
+description: "The request failed because the server is in error. Please try again later."
+content:
+  application/json:
+    schema:
+      $ref: '../schemas/HttpErrorResponse.yaml'
