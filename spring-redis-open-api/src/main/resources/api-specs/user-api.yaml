@@ -148,6 +148,12 @@ paths:
         '500':
           $ref: './common/responses/InternalServerError.yaml'
 
+  # TODO: Add endpoints for assigning and removing groups
+  # Endpoint path for adding:
+  # POST: /users/{userId}/groups
+  # Endpoint path for removing:
+  # DELETE: /users/{userId}/groups/{groupId}
+
 components:
   schemas:
 
