@@ -1,0 +1,26 @@
+spring:
+    application:
+        name: application
+
+    cloud:
+        config:
+            import-check:
+                enabled: true
+            server:
+                git:
+                    uri: https://github.com/zivkovicmarko95/event-bus-property-file
+                    clone-on-start: true
+
+
+    rabbitmq:
+        host: localhost
+        port: 5672
+        username: user
+        password: password
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
+                # include: busrefresh

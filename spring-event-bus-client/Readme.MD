@@ -1,0 +1,2 @@
+This application is configuration client and this application will listen to the configuration server. When the configuration is updated, it is required to send POST request on actuator endpoint for bus refresh on the configuration server. 
+This application, configuration client shouldn't call busrefresh or any other endpoint because it will be updated through event that will be consumed from rabbit mq.
