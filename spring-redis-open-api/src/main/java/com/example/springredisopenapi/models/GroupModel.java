@@ -1,10 +1,11 @@
 package com.example.springredisopenapi.models;
 
+import java.util.Objects;
+import java.util.UUID;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
-import java.util.Objects;
-import java.util.UUID;
 
 @RedisHash("group")
 public class GroupModel {

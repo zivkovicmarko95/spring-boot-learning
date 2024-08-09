@@ -2,7 +2,6 @@ package com.example.springquartzwebclient.jobs;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import com.example.springquartzwebclient.client.api.impl.BookerApiService;
 import com.example.springquartzwebclient.client.responses.BookingCompressedResponse;
