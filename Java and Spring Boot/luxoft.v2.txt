@@ -1,0 +1,627 @@
+1. Spring circular dependencies
+
+    In Spring, circular dependencies occur when two or more beans depend on each other either directly or indirectly,
+    creating a cycle in the dependency graph. For example, if BeanA depends on BeanB and BeanB depends on BeanA, Spring
+    cannot create an instance of either bean because it doesn't know which one to create first.
+
+    Here’s a simplified scenario of circular dependency:
+
+        - BeanA has a dependency on BeanB.
+        - BeanB has a dependency on BeanA.
+    This creates a cycle where neither bean can be fully constructed without the other already being available.
+
+        @Component
+        public class BeanA {
+            private final BeanB beanB;
+
+            @Autowired
+            public BeanA(BeanB beanB) {
+                this.beanB = beanB;
+            }
+        }
+
+        @Component
+        public class BeanB {
+            private final BeanA beanA;
+
+            @Autowired
+            public BeanB(BeanA beanA) {
+                this.beanA = beanA;
+            }
+        }
+
+    In the constructor injection case, Spring would throw a BeanCurrentlyInCreationException because it cannot fully
+    initialize either of the beans without fully creating the other first.
+
+    Solutions:
+
+        Use Setter Injection: This allows Spring to inject dependencies in stages, partially creating one of the beans first.
+        Use @Lazy: By marking one of the beans as @Lazy, Spring delays its initialization until it is actually needed.
+        Refactor the Design: Ideally, you should try to avoid circular dependencies by refactoring your code. One way to do this
+            is by introducing a third bean to handle the interaction between the two dependent beans.
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+2. Collection colision (HashMap)
+
+    In a HashMap, a collision occurs when two different keys generate the same hash code. Since the keys are supposed to be unique,
+    but their hash codes are not, collisions can happen, especially when the number of entries in the map grows large or the hash
+    function is not well-distributed.
+
+    How HashMap Works Internally:
+        Hashing the Key: When you insert a key-value pair, the key’s hashCode() method is used to generate a hash code. This hash code is
+            then mapped to an index in an internal array (called a bucket array).
+        Bucket Array: Each index of this array points to a bucket, which holds entries (key-value pairs).
+        Collision: If two different keys result in the same bucket index (because their hash codes are the same), it leads to a collision.
+
+    What Can Happen if Collisions Are Not Handled Properly:
+        Performance Degradation:
+            If many collisions occur and are handled by linked lists, the performance of operations such as put(), get(), and remove() will
+            degrade from O(1) to O(n). This makes the HashMap significantly slower.
+        Memory Overhead:
+            With a high number of collisions, the linked lists can grow large, consuming more memory.
+        Incorrect Behavior:
+            If proper collision handling is not done, it can lead to overwriting of values or inability to retrieve values correctly. For
+            example, if the same bucket is used for multiple keys and the values are not chained or managed properly, retrieving a value for
+            a specific key may return the wrong value or null.
+
+    How to Fix or Minimize Collisions:
+        Improve Hash Function:
+            Override the hashCode() method to ensure it generates well-distributed and unique hash codes for different keys. A good hash function
+            reduces the likelihood of collisions.
+        Increase Initial Capacity:
+            When creating a HashMap, you can specify a higher initial capacity to reduce the likelihood of collisions. This increases the size of
+            the bucket array, thus reducing the chances of multiple keys being mapped to the same bucket.
+        Load Factor Management:
+            The load factor determines how full the map can get before it is resized (i.e., rehashed). The default load factor is 0.75, meaning
+                that when the map is 75% full, it will be resized (doubled in capacity).
+            Lowering the load factor (e.g., to 0.5) means the map will resize more often, but it also decreases the likelihood of collisions.
+        Use Other Map Implementations:
+            If collisions are a significant problem, consider using other map implementations like TreeMap (which uses a balanced tree internally)
+            or ConcurrentHashMap, which may offer better performance for specific use cases.
+
+    Example of Poor hashCode() Implementation Causing Collisions:
+        
+        public class Person {
+            private String name;
+            
+            @Override
+            public int hashCode() {
+                return 42;  // Bad hash code, leads to collisions for every key
+            }
+        }
+
+        In this case, every Person object will map to the same bucket, causing many collisions, and degrading the performance to O(n).
+
+    How Java 8's Tree-Based Solution Helps:
+        Before Java 8:
+            HashMap used separate chaining with linked lists for collision handling. If multiple entries hashed to the same bucket, a
+            linked list was used. In case of heavy collisions, the lookup time could degrade to O(n).
+        From Java 8:
+            When a bucket exceeds 8 entries, the linked list is converted into a red-black tree. This reduces the worst-case lookup time for
+            that bucket to O(log n), significantly improving performance for heavily collided buckets.
+
+    Summary:
+        HashMap collisions occur when two or more keys generate the same hash code.
+        Separate chaining (using linked lists) and tree-based buckets are used to handle collisions.
+        Unhandled collisions can cause performance degradation, higher memory usage, and incorrect behavior.
+        To minimize collisions, you can improve your hash function, manage the load factor, or adjust the initial capacity of the HashMap.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+3. Concurrent hash map, HashTable and hash map synchronized by you tradeofs.
+    1. HashMap with Manual Synchronization:
+        Overview:
+            HashMap is not thread-safe by default. If multiple threads access a HashMap concurrently, and at least one thread modifies it structurally,
+            there can be issues like race conditions or data corruption.
+            To make a HashMap thread-safe, you can manually synchronize it using either the synchronized keyword or using Collections.synchronizedMap().
+
+        Synchronized Block:
+            Map<String, String> map = new HashMap<>();
+
+            synchronized(map) {
+                map.put("key", "value");
+            }
+
+        Using Collections.synchronizedMap():
+
+            Map<String, String> map = Collections.synchronizedMap(new HashMap<>());
+
+        Trade-offs:
+            Performance: Manually synchronizing a HashMap involves locking the entire map for every operation (e.g., get(), put()). This can lead to
+            poor performance, especially in a multi-threaded environment, because only one thread can access the map at any given time, leading to
+            potential bottlenecks.
+            Lock Granularity: The entire map is locked, even for operations that might not need to lock the whole structure (like read-only operations),
+            making it inefficient when there are many reads and a few writes.
+            Suitability: Works fine for simple, low-concurrency scenarios but not ideal for high-concurrency environments with lots of reads and writes.
+
+    2. HashTable:
+        Overview:
+            HashTable is a legacy class that implements a thread-safe version of a hash map. It internally synchronizes every method
+            (like get(), put(), etc.), so only one thread can access or modify the map at any given time.
+        
+        Code Example:
+            Hashtable<String, String> hashtable = new Hashtable<>();
+            hashtable.put("key", "value");
+
+        Trade-offs:
+            Performance: HashTable locks the entire map for each operation, just like a synchronized HashMap. This makes it highly inefficient in
+                high-concurrency scenarios because of excessive locking.
+            Legacy Usage: HashTable is considered a legacy class and is generally discouraged in favor of more modern implementations like
+                ConcurrentHashMap.
+            No Null Values: HashTable does not allow null keys or null values, unlike HashMap.
+            Suitability: Not recommended for modern applications due to its outdated design and poor concurrency performance.
+
+    3. ConcurrentHashMap:
+        Overview:
+            ConcurrentHashMap is a modern, high-performance, thread-safe implementation of a hash map. It is designed specifically for concurrent
+            access, with fine-grained locking and optimized for high-concurrency scenarios.
+        Key Features:
+            Lock Striping: Instead of locking the entire map, ConcurrentHashMap uses lock striping, which means it divides the map into segments
+            (or "buckets") and locks only the specific segment where the modification or lookup is happening. This allows multiple threads to access
+            the map concurrently, as long as they are working on different segments.
+            No Global Locking for Read Operations: Read operations are non-blocking and do not require locking, which significantly improves performance
+            in read-heavy workloads.
+
+        Code Example:
+            ConcurrentHashMap<String, String> concurrentMap = new ConcurrentHashMap<>();
+            concurrentMap.put("key", "value");
+
+        Trade-offs:
+            Performance: ConcurrentHashMap offers much better performance than HashTable and synchronized HashMap, especially in environments with high
+            concurrency. Reads are lock-free, and writes only lock individual segments, not the entire map.
+            Lock Granularity: It uses fine-grained locks on segments, which minimizes contention and allows for higher throughput in multi-threaded
+            environments.
+            Complexity: While it's optimized for concurrent access, the internal structure of ConcurrentHashMap is more complex compared to HashMap
+            or HashTable. However, this complexity is abstracted away from the user.
+            No Null Values: Like HashTable, ConcurrentHashMap does not allow null keys or values, which is a trade-off for thread-safety.
+
+    When to Use Which:
+        Synchronized HashMap:
+            Use if you have a HashMap in a low-concurrency environment and want simple thread safety. It's easy to implement but can cause contention
+            in high-concurrency cases.
+        
+        HashTable:
+            It is largely obsolete and should not be used in new applications. Use ConcurrentHashMap instead.
+        
+        ConcurrentHashMap:
+            Use this for high-concurrency applications, especially when you need high-performance reads and writes with minimal contention.
+            It is the best choice for scenarios where multiple threads frequently read and modify the map.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+4. try with resourcerces
+
+    Try-with-resources is a feature in Java introduced in Java 7 that simplifies the management of resources (like files, database connections,
+    network sockets, etc.) that need to be closed after usage. It ensures that the resources are automatically closed at the end of the statement,
+    even if an exception is thrown within the try block.
+
+    Key Points:
+        1. Automatic Resource Management: With try-with-resources, any resource that implements the AutoCloseable interface is automatically closed
+                when the try block exits, either normally or due to an exception.
+        2. No Need for finally: Prior to Java 7, resources like InputStream, OutputStream, or Connection had to be closed explicitly in a finally
+                block, which made the code more verbose and error-prone. Try-with-resources removes the need for this manual cleanup.
+        3. Syntax: In a try-with-resources statement, you declare and initialize one or more resources in parentheses immediately after the try keyword.
+                When the try block completes (either successfully or with an exception), the close() method is automatically called on each resource.
+
+    Before try-with-resources (using finally block for resource cleanup):
+
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader("file.txt"));
+            final String line = reader.readLine();
+            System.out.println(line);
+        } catch (final IOException e) {
+            LOGGER.error("Error occurred: {}", e)
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close(); // Explicitly closing the resource in finally block
+                } catch (final IOException e) {
+                    LOGGER.error("Error occurred: {}", e)
+                }
+            }
+        }
+
+    With try-with-resources (cleaner code, no need for finally block):
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("file.txt"))) {
+            String line = reader.readLine();
+            System.out.println(line);
+        } catch (final IOException e) {
+            LOGGER.error("Error occurred: ", e);
+        }
+        // No need to explicitly close the reader, it is automatically closed
+
+    How It Works:
+        The resources are closed automatically when the try block finishes executing.
+        If multiple resources are declared in the try-with-resources block, they are closed in the reverse order of their declaration.
+        The resources must implement the AutoCloseable interface (which includes the close() method). Most Java resources like InputStream,
+        OutputStream, and database connections (Connection) already implement AutoCloseable.
+
+    Multiple Resources:
+        try (
+            BufferedReader reader = new BufferedReader(new FileReader("file.txt"));
+            PrintWriter writer = new PrintWriter(new FileWriter("output.txt"))
+        ) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                writer.println(line);
+            }
+        } catch (IOException e) {
+            LOGGER.error("Error occurred: ", e);
+        }
+        // Both reader and writer are closed automatically
+
+    Advantages of Try-with-Resources:
+        Cleaner Code: No need for explicit finally blocks to close resources.
+        Automatic Handling: Resources are guaranteed to be closed, avoiding potential memory leaks or resource exhaustion.
+        Less Error-Prone: Manual resource management is error-prone, especially in the case of exceptions. Try-with-resources reduces this complexity.
+        Supports Multiple Resources: You can manage multiple resources in a single try block.
+---------------------------------------------------------------------------------------------------------------------------------------
+
+5. What are Memory dump, thread dump, heap dump and what you can do with it 
+
+    Memory dump, thread dump, and heap dump are essential tools used for diagnosing and analyzing issues in Java applications, especially in
+    production environments. Each type of dump provides specific insights into different aspects of the application and can help in understanding
+    problems like memory leaks, deadlocks, and performance bottlenecks.
+
+    1. Memory Dump:
+        A memory dump is a snapshot of the entire memory (RAM) used by an application at a specific point in time. It includes all objects, threads,
+        and classes in memory, along with their current states. This type of dump is used to understand the overall memory consumption of the application.
+
+        Uses:
+            Troubleshooting memory issues: You can analyze memory usage to find out how much memory is being consumed by different parts of the
+            application.
+            Detecting memory leaks: By comparing memory dumps taken at different points in time, you can identify objects that are not being garbage
+            collected and are occupying memory unnecessarily.
+            Diagnosing out-of-memory errors: When the JVM runs out of memory and throws an OutOfMemoryError, a memory dump can help identify the
+            cause of the problem.
+
+    2. Thread Dump:
+        A thread dump is a snapshot of all the threads running in the JVM at a specific moment, along with their stack traces. It provides details about
+        the current state of each thread (e.g., RUNNING, WAITING, BLOCKED, TIMED_WAITING) and what each thread is doing at that moment.
+
+        Uses:
+            Diagnosing deadlocks: A thread dump can show threads that are blocked or waiting for a resource, which is often an indication of a deadlock.
+            Finding performance bottlenecks: By analyzing the state of threads, you can detect where threads are spending most of their time (e.g.,
+            waiting on locks or being blocked).
+            Investigating high CPU usage: A thread dump helps you identify threads that are consuming high CPU by examining which threads are running
+            and their stack traces.
+
+    3. Heap Dump:
+        A heap dump is a snapshot of all objects in the Java heap memory. It includes information about every object in the heap, including their
+        class types, field values, and references between objects. This is particularly useful when dealing with memory issues.
+
+        Uses:
+            Analyzing memory leaks: You can inspect a heap dump to see which objects are using the most memory, and check if they are being retained
+                unnecessarily (e.g., due to references that prevent garbage collection).
+            Understanding memory distribution: Heap dumps help in understanding how memory is allocated across different objects and classes.
+            Investigating OutOfMemoryError: When the JVM runs out of heap space and throws an OutOfMemoryError, a heap dump can be analyzed to identify
+                the objects that are using up the memory.
+
+    Conclusion:
+        Memory Dumps: Capture the state of the entire JVM memory, useful for analyzing overall memory usage.
+        Thread Dumps: Capture the state of all threads, useful for debugging deadlocks and performance issues.
+        Heap Dumps: Capture the objects in the heap memory, useful for diagnosing memory leaks and OutOfMemoryErrors.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+6. what is memory leak and how to force it
+
+    A memory leak in Java occurs when objects that are no longer needed by the application are not properly removed from memory. This happens because
+    there are still references to these objects, preventing the garbage collector from reclaiming the memory they occupy. Over time, memory leaks can
+    lead to excessive memory usage and eventually cause the application to run out of memory, leading to an OutOfMemoryError.
+
+    Key Points of a Memory Leak:
+        Objects that are no longer needed remain in memory.
+        These objects are still referenced by other objects, preventing garbage collection.
+        Over time, the application's memory usage increases, possibly leading to crashes or OutOfMemoryError.
+
+        public class MemoryLeakExample {
+            private static List<String> list = new ArrayList<>();
+
+            public static void main(String[] args) {
+                while (true) {
+                    // Adding strings to a static list that is never cleared
+                    list.add("Memory leak example");
+                }
+            }
+        }
+
+        public class ForcedMemoryLeak {
+            private static List<byte[]> memoryLeakList = new ArrayList<>();
+
+            public static void main(String[] args) {
+                while (true) {
+                    // Allocating large objects and adding them to a list that is never cleared
+                    memoryLeakList.add(new byte[1024 * 1024]);  // 1 MB each time
+                }
+            }
+        }
+
+    How to Detect Memory Leaks
+        Using Heap Dumps: You can analyze a heap dump (snapshot of heap memory) using tools like the Eclipse Memory Analyzer Tool (MAT) or VisualVM
+            to find objects that are unnecessarily retained in memory.
+        Using Profilers: Java profilers like YourKit, JProfiler, or VisualVM allow you to monitor memory usage in real-time and identify memory leaks
+            by observing memory growth over time.
+        Garbage Collection Logs: Enable and analyze GC (Garbage Collection) logs. If the memory usage keeps growing even after multiple garbage
+            collection cycles, there is likely a memory leak.
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+7. Race condition 
+
+    A race condition occurs in concurrent or multi-threaded programming when two or more threads or processes attempt to access and modify shared
+    resources (like variables, objects, or files) simultaneously, and the outcome depends on the timing or order of execution of those threads. If
+    the program's correctness depends on the timing of these operations, the result may be unpredictable or incorrect.
+
+    Key Characteristics of a Race Condition:
+        Concurrency: Multiple threads or processes execute concurrently, potentially operating on shared data or resources.
+        Non-deterministic behavior: The program's output or behavior can vary depending on the interleaving of thread execution, which is not
+            deterministic and can lead to inconsistent results.
+        Unprotected access: Shared resources are accessed or modified without proper synchronization, allowing multiple threads to interfere with
+            each other.
+
+    public class RaceConditionExample {
+        private int counter = 0;
+
+        public void increment() {
+            counter++;
+        }
+
+        public static void main(String[] args) throws InterruptedException {
+            
+            final RaceConditionExample example = new RaceConditionExample();
+            // Create two threads that increment the counter
+            final Thread t1 = new Thread(() -> {
+                for (int i = 0; i < 1000; i++) {
+                    example.increment();
+                }
+            });
+            
+            final Thread t2 = new Thread(() -> {
+                for (int i = 0; i < 1000; i++) {
+                    example.increment();
+                }
+            });
+
+            // Start both threads
+            t1.start();
+            t2.start();
+
+            // Wait for both threads to complete
+            t1.join();
+            t2.join();
+
+            // Print the final value of counter
+            System.out.println("Final Counter Value: " + example.counter);
+        }
+    }
+
+    Problem:
+        In this code, two threads (t1 and t2) are incrementing the same counter variable 1000 times each.
+        Since the counter++ operation is not atomic, it is actually a combination of three steps:
+            Read the current value of counter.
+            Increment the value.
+            Write the new value back to counter.
+        Without proper synchronization, these steps can interleave in unpredictable ways, leading to incorrect results. For instance, both threads
+        might read the same value, increment it, and write the same value back, effectively "losing" an increment. Therefore, the final counter
+        value might be less than 2000, even though each thread was supposed to increment it 1000 times.
+
+    How to Fix Race Conditions:
+        Race conditions are typically fixed using synchronization mechanisms to ensure that only one thread can access the critical section (the part of
+        the code that accesses or modifies shared resources) at a time.
+
+        1. Synchronization Block - By using a synchronized block, you can ensure that the increment() method is executed by only one thread at a time:
+            public synchronized void increment() {
+                counter++;
+            }
+
+        This ensures that only one thread at a time can execute the increment() method, preventing race conditions.
+
+        2. Using Locks - Another way to handle race conditions is by using explicit locks, like the ReentrantLock in Java. This gives you more flexibility
+        over synchronization:
+
+            import java.util.concurrent.locks.Lock;
+            import java.util.concurrent.locks.ReentrantLock;
+
+            public class RaceConditionExample {
+                private int counter = 0;
+                private Lock lock = new ReentrantLock();
+
+                public void increment() {
+                    lock.lock();
+                    try {
+                        counter++;
+                    } finally {
+                        lock.unlock();
+                    }
+                }
+
+                // main method same as above
+            }
+
+        3. Atomic Variables - Java also provides atomic classes like AtomicInteger in the java.util.concurrent.atomic package, which are designed to
+            handle concurrency without needing explicit synchronization.
+
+            import java.util.concurrent.atomic.AtomicInteger;
+
+            public class RaceConditionExample {
+                private AtomicInteger counter = new AtomicInteger(0);
+
+                public void increment() {
+                    counter.getAndIncrement();
+                }
+
+                // main method same as above
+            }
+
+    Problems Caused by Race Conditions:
+        Data Corruption: When multiple threads modify shared data without proper synchronization, they can corrupt the data, leading to incorrect or
+            inconsistent results.
+        Unpredictable Results: Race conditions make the program's behavior non-deterministic, meaning the output can vary each time the program runs.
+        Crashes or Exceptions: In some cases, race conditions can cause exceptions like NullPointerException or ArrayIndexOutOfBoundsException due to
+            improper modification of shared resources.
+        Difficult Debugging: Race conditions are hard to reproduce and debug because their occurrence depends on timing, which may vary between runs
+            or systems.
+
+------------------------------------------------------------------------------------------------------------------------------------
+8. SOLID + dekorator patern
+
+https://www.youtube.com/watch?v=kF7rQmSRlq0&t=338s
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+9. builder pattern
+
+The Builder Pattern is a creational design pattern used in object-oriented programming to simplify the process of creating complex objects.
+It helps in constructing an object step by step, allowing you to produce different representations of an object using the same construction
+process. The Builder Pattern provides an elegant way to deal with optional parameters and makes the code more readable, especially when dealing
+with objects that have a large number of fields or require complex initialization.
+
+Key Concepts of the Builder Pattern:
+    Separation of construction: It separates the construction of an object from its representation.
+    Immutable objects: The pattern is often used to create immutable objects where the internal state of the object cannot be changed once it’s created.
+    Fluent Interface: It allows the use of a fluent interface, enabling method chaining to set up an object's attributes more conveniently.
+    Flexible initialization: You can use the builder to initialize only the required fields, while other fields can have default values.
+
+When to Use the Builder Pattern:
+    When a class has many optional fields or parameters.
+    When an object requires step-by-step construction, and different variations of the object can be created.
+    When constructor overloading becomes too complex due to the number of parameters.
+
+Example: Using Builder Pattern in Java
+        Suppose you have a class Person with many optional fields such as firstName, lastName, age, address, and phoneNumber. Using multiple
+        constructors to account for all possible combinations of fields can become unmanageable. The Builder Pattern provides a clean solution
+        to this problem.
+    Without Builder Pattern:
+        You may end up with a large number of constructors to handle various combinations of parameters:
+
+        public class Person {
+            private String firstName;
+            private String lastName;
+            private int age;
+            private String address;
+            private String phoneNumber;
+
+            // Constructor with only required fields
+            public Person(String firstName, String lastName) {
+                this.firstName = firstName;
+                this.lastName = lastName;
+            }
+
+            // Constructor with all fields
+            public Person(String firstName, String lastName, int age, String address, String phoneNumber) {
+                this.firstName = firstName;
+                this.lastName = lastName;
+                this.age = age;
+                this.address = address;
+                this.phoneNumber = phoneNumber;
+            }
+
+            // Other overloaded constructors for different combinations...
+        }
+    
+    With Builder Pattern:
+        You can avoid this complexity by using the Builder Pattern:
+
+        public class Person {
+            private String firstName;
+            private String lastName;
+            private int age;
+            private String address;
+            private String phoneNumber;
+
+            // Private constructor to prevent direct instantiation
+            private Person(PersonBuilder builder) {
+                this.firstName = builder.firstName;
+                this.lastName = builder.lastName;
+                this.age = builder.age;
+                this.address = builder.address;
+                this.phoneNumber = builder.phoneNumber;
+            }
+
+            // Static nested builder class
+            public static class PersonBuilder {
+                private String firstName;
+                private String lastName;
+                private int age;
+                private String address;
+                private String phoneNumber;
+
+                public PersonBuilder(String firstName, String lastName) {
+                    this.firstName = firstName;
+                    this.lastName = lastName;
+                }
+
+                public PersonBuilder age(int age) {
+                    this.age = age;
+                    return this;
+                }
+
+                public PersonBuilder address(String address) {
+                    this.address = address;
+                    return this;
+                }
+
+                public PersonBuilder phoneNumber(String phoneNumber) {
+                    this.phoneNumber = phoneNumber;
+                    return this;
+                }
+
+                public Person build() {
+                    return new Person(this);
+                }
+            }
+        }
+
+    Now you can use the PersonBuilder to create Person objects in a flexible and readable way:
+
+        public class Main {
+            public static void main(String[] args) {
+                // Building a Person object using the builder pattern
+                Person person = new Person.PersonBuilder("John", "Doe")
+                                        .age(30)
+                                        .address("123 Main St")
+                                        .phoneNumber("555-1234")
+                                        .build();
+
+                Person person2 = new Person.PersonBuilder("Alice", "Smith")
+                                        .address("456 Oak St")
+                                        .build();  // No age or phone number
+            }
+        }
+
+    Advantages of the Builder Pattern:
+        Better readability: The builder pattern makes the creation of objects with many parameters more readable and easy to understand.
+        Immutable objects: The builder pattern often leads to immutable objects, which are easier to reason about in concurrent environments.
+        Flexible object construction: It allows you to build objects with different combinations of parameters, giving you flexibility without
+            the complexity of multiple constructors.
+        Fluent API: Method chaining (fluent interface) makes the code more concise and readable.
+
+    When to Avoid the Builder Pattern:
+        For simple objects or objects with only a few attributes, using the builder pattern may be overkill.
+        If you don’t have optional parameters or complex object construction, a simple constructor or factory method might suffice.
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+10. In Java 1.8 and newer how to check if string is null or empty
+
+    1. Using String.isEmpty() and null Check
+
+        public static boolean isNullOrEmpty(String str) {
+            return str == null || str.isEmpty();
+        }
+
+        str == null: Checks if the String is null.
+        str.isEmpty(): Checks if the String is an empty string ("").
+
+    2. Using String.isBlank() (Java 11 and newer)
+
+        - Starting with Java 11, you can use the String.isBlank() method, which checks if a string is null, empty, or contains only whitespace characters.
+
+        public static boolean isNullOrBlank(String str) {
+            return str == null || str.isBlank();
+        }
+
+-----------------------------------------------------------------------------------------------------------------------------------
